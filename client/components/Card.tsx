@@ -1,4 +1,3 @@
-
 import {
   Text,
   Image,
@@ -6,6 +5,7 @@ import {
   StyleSheet,
   View,
   Animated,
+  ImageBackground,
 } from "react-native";
 
 export type Profile = {
@@ -24,7 +24,8 @@ export type CardProps = {
 
 export default function Card(props: CardProps) {
   return (
-    <View
+    <ImageBackground
+      resizeMode="contain"
       style={{
         ...StyleSheet.absoluteFillObject,
         backgroundColor: "azure",
@@ -33,10 +34,8 @@ export default function Card(props: CardProps) {
         shadowColor: "lightslategray",
         borderRadius: 20,
       }}
+      source={props.profile.image}
     >
-      <View style={styles.imageContainer}>
-        <Image style={styles.image} source={props.profile.image} />
-      </View>
       <Animated.View
         style={{
           ...styles.like,
@@ -55,25 +54,14 @@ export default function Card(props: CardProps) {
         <Text>Nope</Text>
       </Animated.View>
       <View style={styles.overlay}>
-        <View style={styles.footer}>
-          <Text style={styles.text}>{props.profile.name}</Text>
-          <Text style={styles.description}>{props.profile.description}</Text>
-        </View>
+        <Text style={styles.text}>{props.profile.name}</Text>
+        <Text style={styles.description}>{props.profile.description}</Text>
       </View>
-    </View>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
-  imageContainer: {
-    ...StyleSheet.absoluteFillObject,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  image: {
-    width: "75%",
-    aspectRatio: 1,
-  },
   like: {
     position: "absolute",
     top: 0,
@@ -92,9 +80,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "flex-end",
     padding: 16,
-  },
-  footer: {
-    flexDirection: "column",
   },
   text: {
     color: "black",
