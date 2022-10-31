@@ -2,7 +2,7 @@
 // Import this thing
 
 
-// Create shcema of user model
+// Create schema of user model
 
 
 
