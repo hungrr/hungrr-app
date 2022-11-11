@@ -7,7 +7,7 @@ import Card, { Profile } from "./Card";
 const cards: Profile[] = [
   {
     image: {
-      uri: "https://upload.wikimedia.org/wikipedia/commons/3/36/McDonald%27s_Golden_Arches.svg",
+      uri: "https://thumbs.dreamstime.com/b/outside-mcdonalds-store-38411658.jpg",
     },
     name: "McDonalds",
   },
@@ -42,32 +42,3 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
-
-const styles2 = StyleSheet.create({
-  wrapper: {
-      position: 'absolute',
-      borderRadius: 10,
-      left: 34,
-      right: 32,
-      top: 95,
-      height: 450,
-      width: 'auto',
-
-  },
-  card: {
-      position: 'absolute',
-      borderRadius: 10,
-      left: 0,
-      right: 0,
-      height: 450,
-      width: 'auto',
-      overflow: 'hidden',
-  },
-  shadowProp: {
-      shadowColor: '#171717',
-      shadowOffset: {width: -2, height: 4},
-      shadowOpacity: 0.7,
-      shadowRadius: 8,
-  },
-
-})
