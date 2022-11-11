@@ -10,8 +10,6 @@ const cards: Profile[] = [
       uri: "https://upload.wikimedia.org/wikipedia/commons/3/36/McDonald%27s_Golden_Arches.svg",
     },
     name: "McDonalds",
-    description:
-      "McDonald's Corporation is an American-based multinational fast food chain, founded in 1940 as a restaurant operated by Richard and Maurice McDonald, in San Bernardino, California, United States.",
   },
 ];
 // contain logic of getting next card handle swipe etc...
@@ -19,7 +17,7 @@ export default function CardContainer() {
   return (
     <View style={StyleSheet.absoluteFill}>
       <View style={styles.container}>
-        <Card profile={cards[0]} />
+        <Card profile={cards[0]}/>
       </View>
       <View style={styles.bottom}>
         <Icon name="close" size={30} color="red" />
@@ -44,3 +42,32 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
+
+const styles2 = StyleSheet.create({
+  wrapper: {
+      position: 'absolute',
+      borderRadius: 10,
+      left: 34,
+      right: 32,
+      top: 95,
+      height: 450,
+      width: 'auto',
+
+  },
+  card: {
+      position: 'absolute',
+      borderRadius: 10,
+      left: 0,
+      right: 0,
+      height: 450,
+      width: 'auto',
+      overflow: 'hidden',
+  },
+  shadowProp: {
+      shadowColor: '#171717',
+      shadowOffset: {width: -2, height: 4},
+      shadowOpacity: 0.7,
+      shadowRadius: 8,
+  },
+
+})

@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   Text,
   Image,
@@ -27,12 +28,11 @@ export default function Card(props: CardProps) {
     <ImageBackground
       resizeMode="contain"
       style={{
-        ...StyleSheet.absoluteFillObject,
-        backgroundColor: "azure",
-        shadowOpacity: 0.6,
-        shadowRadius: 10,
-        shadowColor: "lightslategray",
-        borderRadius: 20,
+        flex: 1,
+        margin: 10,
+        borderRadius: 10,
+        height: 450,
+        backgroundColor: 'azure',
       }}
       source={props.profile.image}
     >
