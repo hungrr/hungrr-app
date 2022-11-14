@@ -8,12 +8,15 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import HomeScreen from '../screens/Home'
 import FavoritesScreen from '../screens/Favorites'
 import SettingsScreen from '../screens/Settings'
+import ProfileScreen from '../screens/Profile'
 
 // Screen Names
 const homeName = 'Home';
 const favoritesName = 'Favorites';
 const settingsName = 'Settings';
+const profileName = 'Profile';
 const Tab = createBottomTabNavigator();
+
 
 
 const LogoTitle = () =>
@@ -46,6 +49,10 @@ const MainContainer = () =>
                             else if (rn === settingsName) {
                                 iconName = focused ? 'settings' : 'settings-outline';
                             }
+                            else if (rn === profileName)
+                            {
+                                iconName = focused ? 'person-circle' : 'person-circle-outline';
+                            }
                             return <Ionicons name={iconName} size={size} color={color} />;
                         },
                         headerStyle:{
@@ -66,8 +73,9 @@ const MainContainer = () =>
                     <Tab.Screen name={homeName} component={HomeScreen} options={{headerTitle: (props: any) => <LogoTitle {...props}/>}} />
                     <Tab.Screen name={favoritesName} component={FavoritesScreen} />
                     <Tab.Screen name={settingsName} component={SettingsScreen} />
+                    <Tab.Screen name={profileName} component={ProfileScreen} />
                 </Tab.Navigator>
-
+                
             </NavigationContainer>
         </>
     )
