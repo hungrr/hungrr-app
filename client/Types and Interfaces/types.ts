@@ -27,3 +27,9 @@ export type CardProps = {
     likeOpacity?: number;
     dislikeOpacity?: number;
 };
+
+export type FavoriteRestaurant = {
+    image: ImageSourcePropType;
+    name: string;
+    rating: number;
+};

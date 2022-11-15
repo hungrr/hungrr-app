@@ -36,7 +36,6 @@ export default function Card(props: CardProps) {
         height: "auto",
         backgroundColor: "azure",
         overflow: "hidden",
-        
       }}
       
       source={props.profile.image}

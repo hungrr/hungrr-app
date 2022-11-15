@@ -56,12 +56,12 @@ const MainContainer = () =>
                             return <Ionicons name={iconName} size={size} color={color} />;
                         },
                         headerStyle:{
-                            backgroundColor: '#FBC4AB',
+                            backgroundColor: '#F2DEBA',
                             borderRadius: 10,
                             height: 110
                         },
                         tabBarStyle: {
-                            backgroundColor: '#FBC4AB',
+                            backgroundColor: '#F2DEBA',
                             borderRadius: 10,
                             height: 90
                         },
