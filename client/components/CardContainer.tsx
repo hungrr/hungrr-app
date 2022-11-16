@@ -9,7 +9,7 @@ const cards: Profile[] = [
     image: {
       uri: "https://thumbs.dreamstime.com/b/outside-mcdonalds-store-38411658.jpg",
     },
-    name: "McDonalds",
+    name: "McDonald's",
   },
 ];
 // contain logic of getting next card handle swipe etc...

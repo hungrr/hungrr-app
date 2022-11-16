@@ -33,3 +33,5 @@ export type FavoriteRestaurant = {
     name: string;
     rating: number;
 };
+
+

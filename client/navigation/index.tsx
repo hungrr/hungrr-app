@@ -17,8 +17,6 @@ const settingsName = 'Settings';
 const profileName = 'Profile';
 const Tab = createBottomTabNavigator();
 
-
-
 const LogoTitle = () =>
 {
     return(
@@ -37,43 +35,47 @@ const MainContainer = () =>
                 <Tab.Navigator
                     initialRouteName={homeName}
                     screenOptions={({ route }) => ({
-                        tabBarIcon: ({ focused, color, size }) => {
+                        tabBarIcon: ({ focused, size }) => {
                             let iconName = 'home';
                             let rn = route.name;
+                            let iconColor = 'white';
                             if (rn === homeName) {
                                 iconName = focused ? 'home' : 'home-outline';
+                                iconColor = focused ? '#74C7B8' : 'white'; 
                             }
                             else if (rn === favoritesName) {
                                 iconName = focused ? 'list' : 'list-outline';
+                                iconColor = focused ? '#74C7B8' : 'white';
                             }
                             else if (rn === settingsName) {
                                 iconName = focused ? 'settings' : 'settings-outline';
+                                iconColor = focused ? '#74C7B8' : 'white';
                             }
                             else if (rn === profileName)
                             {
                                 iconName = focused ? 'person-circle' : 'person-circle-outline';
+                                iconColor = focused ? '#74C7B8' : 'white';
                             }
-                            return <Ionicons name={iconName} size={size} color={color} />;
+                            return <Ionicons name={iconName} size={size} color={iconColor} />;
                         },
                         headerStyle:{
-                            backgroundColor: '#F2DEBA',
+                            backgroundColor: '#EE9595',
                             borderRadius: 10,
                             height: 110
                         },
                         tabBarStyle: {
-                            backgroundColor: '#F2DEBA',
+                            backgroundColor: '#EE9595',
                             borderRadius: 10,
-                            height: 90
+                            height: 90,
                         },
                         headerTitleStyle: {
                             color: 'white'
                         },
-
                     })}>
-                    <Tab.Screen name={homeName} component={HomeScreen} options={{headerTitle: (props: any) => <LogoTitle {...props}/>}} />
-                    <Tab.Screen name={favoritesName} component={FavoritesScreen} />
-                    <Tab.Screen name={settingsName} component={SettingsScreen} />
-                    <Tab.Screen name={profileName} component={ProfileScreen} />
+                    <Tab.Screen name={homeName} component={HomeScreen} options={{headerTitle: (props: any) => <LogoTitle {...props}/>, tabBarActiveTintColor: '#74C7B8', tabBarInactiveTintColor: 'white'}} />
+                    <Tab.Screen name={favoritesName} component={FavoritesScreen} options={{tabBarActiveTintColor: '#74C7B8', tabBarInactiveTintColor: 'white'}}/>
+                    <Tab.Screen name={settingsName} component={SettingsScreen} options={{tabBarActiveTintColor: '#74C7B8', tabBarInactiveTintColor: 'white'}}/>
+                    <Tab.Screen name={profileName} component={ProfileScreen} options={{tabBarActiveTintColor: '#74C7B8', tabBarInactiveTintColor: 'white'}}/>
                 </Tab.Navigator>
                 
             </NavigationContainer>
