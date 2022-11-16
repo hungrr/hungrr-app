@@ -9,21 +9,10 @@ import {
   ImageBackground,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { CardProps } from "../Types and Interfaces/types";
+import Ionicons from 'react-native-vector-icons/Ionicons'
 
 
-export type Profile = {
-  image: ImageSourcePropType;
-  name: string;
-  description?: string;
-  address?: string;
-  additionalDetails?: string[];
-};
-
-export type CardProps = {
-  profile: Profile;
-  likeOpacity?: number;
-  dislikeOpacity?: number;
-};
 
 export default function Card(props: CardProps) {
   return (
@@ -31,7 +20,7 @@ export default function Card(props: CardProps) {
       resizeMode="cover"
       style={{
         flex: 1,
-        margin: 10,
+        margin: 5,
         borderRadius: 10,
         height: "auto",
         backgroundColor: "azure",
@@ -46,8 +35,9 @@ export default function Card(props: CardProps) {
         style={{height : '100%', width : '100%'}}>
           {/* Moved text overlay inside gradient so you can see it */}
           <View style={styles.overlay}>
-            <Text style={styles.text}>{props.profile.name}</Text>
-            <Text style={styles.description}>{props.profile.description}</Text>
+            <Text style={styles.name}>{props.profile.name}</Text>
+            <Text style={styles.ratingValue}>{props.profile.rating}</Text>
+            <Ionicons style={styles.ratingIcon} name={'star'} color={'gold'}/>
           </View>
       </LinearGradient>
       <Animated.View
@@ -88,17 +78,28 @@ const styles = StyleSheet.create({
   },
   overlay: {
     flex: 1,
-    justifyContent: "flex-end",
-    padding: 16
+    flexDirection: 'row'
   },
-  text: {
+  name: {
     color: "white",
     fontFamily: "lucida grande",
     fontWeight: "bold",
     fontSize: 24,
+    position: "absolute",
+    bottom: 60,
+    left: 18,
   },
-  description: {
-    color: "darkslategray",
-    opacity: 0.8,
+  ratingValue: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 16,
+    position: "absolute",
+    bottom: 60,
+    right: 35
   },
+  ratingIcon: {
+    position: "absolute",
+    bottom: 63, 
+    right: 20
+  }
 });

@@ -17,9 +17,7 @@ import {
 export type Profile = {
     image: ImageSourcePropType;
     name: string;
-    description?: string;
-    address?: string;
-    additionalDetails?: string[];
+    rating: number;
 };
 
 export type CardProps = {

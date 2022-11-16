@@ -12,7 +12,9 @@ const sampleCards:Profile[] = [
         uri: "https://thumbs.dreamstime.com/b/outside-mcdonalds-store-38411658.jpg",
       },
       name: "McDonalds",
+      rating: 4.6,
     },
+
 ];
 
 export default sampleCards;
