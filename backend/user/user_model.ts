@@ -17,4 +17,10 @@ const restaurantSchema = new Schema({
 module.exports = mongoose.model('restaurant', restaurantSchema)
 
 // Create shcema of user model
+// Create schema of user model
+
+
+
+
+
 // Export functions
