@@ -46,5 +46,5 @@ router.patch('/:id', (req, res) => {
 
 // Export functions
 
-module.exports = router
+export default router;
 

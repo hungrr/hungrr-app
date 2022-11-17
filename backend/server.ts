@@ -1,5 +1,5 @@
 import express from 'express';
-import * as dotenv from 'dotenv';
+import dotenv from 'dotenv';
 import bodyparser from 'body-parser';
 import loginRoutes from './login/login_routes';
 
