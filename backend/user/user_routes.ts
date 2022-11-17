@@ -23,7 +23,8 @@ router.get('/:id', (req, res) => {
 router.post('/', (req, res) => {
     const {title} = req.body
     try {
-        const restaurant = await Restaurant.create({name})
+        const restaurant = await Restaurant.create({business_status, geometry, icon, icon_background_color, icon_mask_base_uri, name, opening_hours, photos, place_id, 
+        plus_code, price_level, rating, reference, scope, types, user_rating_totals, vicinity})
         res.status(200).json(restaurant)
     } catch (error) {
         res.status(400).json({error: error.message})
