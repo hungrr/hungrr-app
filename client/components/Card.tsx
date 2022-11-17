@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Text,
   Image,
@@ -10,7 +10,8 @@ import {
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { CardProps } from "../Types and Interfaces/types";
-import Ionicons from 'react-native-vector-icons/Ionicons'
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
 
 
 
@@ -37,7 +38,7 @@ export default function Card(props: CardProps) {
           <View style={styles.overlay}>
             <Text style={styles.name}>{props.profile.name}</Text>
             <Text style={styles.ratingValue}>{props.profile.rating}</Text>
-            <Ionicons style={styles.ratingIcon} name={'star'} color={'gold'}/>
+            <Ionicons style={styles.ratingIcon} name={'star'} color={'gold'} size={15}/>
           </View>
       </LinearGradient>
       <Animated.View
@@ -100,6 +101,7 @@ const styles = StyleSheet.create({
   ratingIcon: {
     position: "absolute",
     bottom: 63, 
-    right: 20
+    right: 15
+    
   }
 });

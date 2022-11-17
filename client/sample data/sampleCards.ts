@@ -4,17 +4,26 @@ This file is to store sample card data to develop and test UI/UX functionality b
 
 */
 
-import { Profile } from "../Types and Interfaces/types";
+import { Profile, FavoriteRestaurant } from "../Types and Interfaces/types";
 
 const sampleCards:Profile[] = [
     {
       image: {
         uri: "https://thumbs.dreamstime.com/b/outside-mcdonalds-store-38411658.jpg",
       },
-      name: "McDonalds",
+      name: "McDonald's",
       rating: 4.6,
+      price: 2,
     },
-
 ];
 
-export default sampleCards;
+
+export const sampleFavorites:FavoriteRestaurant[] = [
+  {
+    image: {uri:'https://thumbs.dreamstime.com/b/outside-mcdonalds-store-38411658.jpg'},
+    name: "McDonald's",
+    rating: 4.6,
+  },
+]
+
+export default sampleCards

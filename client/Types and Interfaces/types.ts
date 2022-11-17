@@ -18,6 +18,7 @@ export type Profile = {
     image: ImageSourcePropType;
     name: string;
     rating: number;
+    price: number;
 };
 
 export type CardProps = {
@@ -32,4 +33,6 @@ export type FavoriteRestaurant = {
     rating: number;
 };
 
-
+export type FavoritesCardProp ={
+    favorites: FavoriteRestaurant;
+}
