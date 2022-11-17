@@ -13,6 +13,7 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "messagebird": "^3.8.1",
+    "mongoose": "^6.7.2",
     "node-fetch": "^3.2.10"
   },
   "devDependencies": {

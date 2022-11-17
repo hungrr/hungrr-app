@@ -1,13 +1,9 @@
 
-/*
-    NOT FINISHED - JUST A BASIC SKELETON TO BUILD OFF OF
-*/
-
 // Imports
-
-const express = require('express')
+import express from 'express';
 const router = express.Router()
-const Restaurant = require('../models/user_models')
+import user from '../user/user_model';
+import Restaurant from '../restaurant/restaurant_model';
 
 // Create routes functions for GET, POST, UPDATE, and DELETE
 
@@ -21,12 +17,13 @@ router.get('/:id', (req, res) => {
 // POST
 
 router.post('/', (req, res) => {
-    const {title} = req.body
+    const {business_status, geometry, icon, icon_background_color, icon_mask_base_uri, name, opening_hours, photos, place_id, 
+        plus_code, price_level, rating, reference, scope, types, user_rating_totals, vicinity} = req.body
     try {
-        const restaurant = await Restaurant.create({business_status, geometry, icon, icon_background_color, icon_mask_base_uri, name, opening_hours, photos, place_id, 
+        const restaurant = Restaurant.create({business_status, geometry, icon, icon_background_color, icon_mask_base_uri, name, opening_hours, photos, place_id, 
         plus_code, price_level, rating, reference, scope, types, user_rating_totals, vicinity})
         res.status(200).json(restaurant)
-    } catch (error) {
+    } catch (error: any) {
         res.status(400).json({error: error.message})
     }
 })

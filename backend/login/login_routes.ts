@@ -1,5 +1,5 @@
 import express from 'express';
-import bodyparser from 'body-parser';
+//import bodyparser from 'body-parser';
 import dotenv from 'dotenv';
 import initMB from 'messagebird';
 const router = express.Router();
