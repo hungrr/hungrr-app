@@ -2,20 +2,17 @@
 // Imports
 import express from 'express';
 const router = express.Router()
-import user from '../user/user_model';
-import Restaurant from '../restaurant/restaurant_model';
-
-// Create routes functions for GET, POST, UPDATE, and DELETE
+//import user from '../user/user_model';
+//import Restaurant from '../restaurant/restaurant_model';
 
 // GET
-
 router.get('/:id', (req, res) => {
     res.json({mssg: 'GET single'})
 })
 
 
 // POST
-
+/*
 router.post('/', (req, res) => {
     const {business_status, geometry, icon, icon_background_color, icon_mask_base_uri, name, opening_hours, photos, place_id, 
         plus_code, price_level, rating, reference, scope, types, user_rating_totals, vicinity} = req.body
@@ -27,9 +24,14 @@ router.post('/', (req, res) => {
         res.status(400).json({error: error.message})
     }
 })
+*/
+
+// Generic POST req (for tests)
+router.post('/', (req, res) => {
+    res.json({mssg: 'POST REQ'})
+})
 
 // DELETE
-
 router.delete('/:id', (req, res) => {
     res.json({mssg: 'DELETE single'})
 })
@@ -39,12 +41,10 @@ router.delete('/', (req, res) => {
 })
 
 // UPDATE
-
 router.patch('/:id', (req, res) => {
     res.json({mssg: 'UPDATE'})
 })
 
 // Export functions
-
 export default router;
 

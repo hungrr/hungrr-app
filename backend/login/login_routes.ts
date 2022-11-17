@@ -15,10 +15,7 @@ if (process.env.MESSAGEBIRD_API_KEY) {
 const messagebird = initMB(key);
 
 
-
-
 // Phone number POST request
-
 router.post('/phonenumber', function(req, res) {
     const number = req.body.number;    
     messagebird.verify.create(number, {
@@ -39,6 +36,7 @@ router.post('/phonenumber', function(req, res) {
     })    
 });
 
+// Verify OTP code
 router.post('/verify', function(req, res) {
     const id = req.body.id;
     const token = req.body.token;
