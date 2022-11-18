@@ -6,7 +6,7 @@ const router = express.Router()
 //import Restaurant from '../restaurant/restaurant_model';
 
 // GET
-router.get('/:id', (req, res) => {
+router.get('/getstuff', (req, res) => {
     res.json({mssg: 'GET single'})
 })
 

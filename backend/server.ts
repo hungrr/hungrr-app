@@ -1,7 +1,7 @@
-import * as express from 'express';
+import express from 'express';
 import dotenv from 'dotenv';
 import bodyparser from 'body-parser';
-import loginRoutes from './login/login_routes';
+//import loginRoutes from './login/login_routes';
 import userroutes from './user/user_routes';
 
 dotenv.config();
@@ -19,8 +19,8 @@ app.use((req, res, next) => {
 
 
 // routes
-app.use('/api/login',loginRoutes)
-app.use('api/user', userroutes)
+//app.use('/api/login',loginRoutes)
+app.use('/api/user', userroutes)
 
 // listen for requests
 app.listen(process.env.PORT, () => {
