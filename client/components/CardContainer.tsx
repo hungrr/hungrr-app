@@ -19,7 +19,7 @@ export default function CardContainer() {
         cardContainerStyle={styles.container}
         renderCard={(card) => (
           <View style={styles.card}>
-            <Card profile={sampleCards[0]}/>
+            <Card profile={card}/>
           </View>
         )}
       />
