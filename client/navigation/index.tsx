@@ -9,6 +9,7 @@ import HomeScreen from '../screens/Home'
 import FavoritesScreen from '../screens/Favorites'
 import SettingsScreen from '../screens/Settings'
 import ProfileScreen from '../screens/Profile'
+import LogoTitle from '../components/LogoTitle';
 
 // Screen Names
 const homeName = 'Home';
@@ -16,16 +17,6 @@ const favoritesName = 'Favorites';
 const settingsName = 'Settings';
 const profileName = 'Profile';
 const Tab = createBottomTabNavigator();
-
-const LogoTitle = () =>
-{
-    return(
-        <Image 
-            style={styles.logo} 
-            source={require('../assets/images/logo.png')}
-        />
-    );
-}
 
 const MainContainer = () =>
 {
@@ -82,12 +73,5 @@ const MainContainer = () =>
         </>
     )
 }
-
-const styles = StyleSheet.create({
-    logo: {
-        resizeMode: 'contain',
-        transform: [{scale: 0.65}]  
-    }
-})
 
 export default MainContainer;
