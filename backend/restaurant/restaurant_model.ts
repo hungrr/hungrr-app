@@ -4,22 +4,27 @@ const Schema = mongoose.Schema
 
 export interface IRestaurant extends mongoose.Document {
     business_status : string,
+    // geometry.location is the coordinates of the place which is probably all we need
     geometry: object,
-    icon: string,
-    icon_background_color: string;
-    icon_mask_base_uri: string,
+    // we don't need the icon, that's just the default Google Maps pin
+    // icon: string,
+    // icon_background_color: string;
+    // icon_mask_base_uri: string,
     name: string,
     opening_hours: object,
     photos: object, //WRONG
+    // place_id and reference seem to be the same thing
     place_id: string,
-    plus_code: object,
+    // don't think we need plus_code, seems like weird lat long
+    // plus_code: object,
     price_level: number,
     rating: number,
-    reference: string,
-    scope: string,
-    types: object, // WRONG
+    // reference: string,
+    // scope: string,
+    // types: object, // WRONG
     user_ratings_total: number,
-    vicinity: string
+    // geometry.location probably has a better precise location
+    // vicinity: string
 }
 
 export const restaurantSchema = new Schema({
@@ -29,18 +34,6 @@ export const restaurantSchema = new Schema({
     },
     geometry: {
         type: Object,
-        required: true
-    },
-    icon: {
-        type: String,
-        required: true
-    },
-    icon_background_color: {
-        type: String,
-        required: true
-    },
-    icon_mask_base_uri: {
-        type: String,
         required: true
     },
     name: {
@@ -59,10 +52,6 @@ export const restaurantSchema = new Schema({
         type: String,
         required: true
     },
-    plus_code: {
-        type: Object,
-        required: true
-    },
     price_level: {
         type: Number,
         required: true
@@ -71,26 +60,10 @@ export const restaurantSchema = new Schema({
         type: Number,
         required: true
     },
-    reference: {
-        type: String,
-        required: true
-    },
-    scope: {
-        type: String,
-        required: true
-    },
-    types: {
-        type: Array,
-        required: true
-    },
     user_ratings_total: {
         type: Number,
         required: true
     },
-    vicinity: {
-        type: String,
-        required: true
-    }
 }, { timestamps: true});
 
 const restaurant = mongoose.model<IRestaurant>('Restaurant', restaurantSchema);
