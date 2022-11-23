@@ -2,12 +2,38 @@
 // Imports
 import express from 'express';
 const router = express.Router()
-//import user from '../user/user_model';
+import mongoose from 'mongoose';
+import User from '../user/user_model';
 //import Restaurant from '../restaurant/restaurant_model';
 
 // GET
-router.get('/getstuff', (req, res) => {
-    res.json({mssg: 'GET single'})
+router.get('/getUser/:phoneNumber', async (req, res) => {
+    const { phoneNumber } = req.params
+
+    /*
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(404).json({error: 'No such workout'})
+    }
+    */
+  
+    await User.find({
+        phoneNumber
+    }).then((response) => {
+        res.status(200).send({
+            results: response,
+            found: response.length > 0
+        });
+    }).catch((error: any) => {
+        res.status(400).send({ error });
+    })
+    
+    /*
+    if (!user) {
+      return res.status(404).json({error: 'No such workout'})
+    }
+
+    res.status(200).json(user)
+    */
 })
 
 
@@ -26,9 +52,30 @@ router.post('/', (req, res) => {
 })
 */
 
-// Generic POST req (for tests)
-router.post('/', (req, res) => {
-    res.json({mssg: 'POST REQ'})
+// Create User
+router.post('/newUser', async (req, res) => {
+    const { name, phoneNumber } = req.body
+
+    // add to the database
+    try {
+      const user = await User.find({ phoneNumber }).then((response) => response);
+
+      if (user.length === 0) {
+        const newUserData = await User.create({ name, phoneNumber, favorites: [  ] })
+        res.status(200).send({
+            newUser: true,
+            user: newUserData
+        })
+      } else {
+        res.status(200).send({
+            newUser: false,
+            user: user[0]
+        })
+      }
+
+    } catch (error : any) {
+      res.status(400).json({ error: error.message })
+    }
 })
 
 // DELETE

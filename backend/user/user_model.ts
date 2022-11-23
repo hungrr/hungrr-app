@@ -13,11 +13,14 @@ export const userSchema = new Schema({
         type: String,
         required: true
     },
-    phonenum: {
-        type: Object,
+    phoneNumber: {
+        type: String,
+        required: true
+    },
+    favorites: {
+        type: Array,
         required: true
     }
-    //Favorites (coming soon)
 })
 
 const user = mongoose.model<IUser>('User', userSchema);
