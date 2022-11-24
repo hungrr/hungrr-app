@@ -3,8 +3,8 @@
 import express from 'express';
 const router = express.Router()
 import mongoose from 'mongoose';
-import user from '../user/user_model';
-import User from '../user/user_model';
+import user from './user_model';
+import User from './user_model';
 //import Restaurant from '../restaurant/restaurant_model';
 
 // GET
@@ -24,7 +24,7 @@ router.get('/getUser/:phoneNumber', async (req, res) => {
             results: response,
             found: response.length > 0
         });
-    }).catch((error: any) => {
+    }).catch((error) => {
         res.status(400).send({ error });
     })
     
@@ -76,11 +76,12 @@ router.post('/newUser', async (req, res) => {
         })
       }
 
-    } catch (error : any) {
+    } catch (error) {
       res.status(400).send({ hasError: error })
     }
 })
 
+/*
 router.post('/addFavorites', async (req, res) => {
 
     const {
@@ -96,21 +97,23 @@ router.post('/addFavorites', async (req, res) => {
         if (user.length === 0) {
             res.status(200).send({ hasError: true, userExists: false });
         } else {
-            user = user[0];
 
-            const uniqueFavorites = [ ...(user.favorites) ];
-            for (const newFavorite in newFavorites) {
+            const foundUser = user[0];
 
+            const uniqueFavorites = [ ...(foundUser.favorites) ];
+
+            for (let x = 0; x < newFavorites.length; ++x) {
                 let foundFavorite = false;
-                for (const favorite in user.favorites) {
-                    if (newFavorite["place_id"] === favorite["place_id"]) {
+
+                for (let y = 0; y < uniqueFavorites.length; ++y) {
+                    if (uniqueFavorites[x].place_id === newFavorites[x].place_id) {
                         foundFavorite = true;
                         break;
                     }
                 }
 
                 if (!foundFavorite) {
-                    uniqueFavorites.push(newFavorite);
+                    uniqueFavorites.push(newFavorites[x]);
                 }
             }
 
@@ -122,11 +125,12 @@ router.post('/addFavorites', async (req, res) => {
 
         }
 
-    } catch (error : any) {
+    } catch (error) {
         res.status(400).send({ hasError: true, error });
     };
 
 })
+*/
 
 // DELETE
 router.delete('/:id', (req, res) => {

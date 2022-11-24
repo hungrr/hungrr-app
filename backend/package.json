@@ -4,7 +4,8 @@
   "description": "",
   "main": "server.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "ts-node-esm server.ts"
   },
   "keywords": [],
   "author": "",
@@ -13,8 +14,10 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "messagebird": "^3.8.1",
-    "mongoose": "^6.7.2",
-    "node-fetch": "^3.2.10"
+    "mongoose": "^6.7.3",
+    "node-fetch": "^3.2.10",
+    "nodemon": "^2.0.20",
+    "ts-node": "^10.9.1"
   },
   "devDependencies": {
     "@tsconfig/node16": "^1.0.3",
