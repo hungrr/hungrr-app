@@ -3,6 +3,7 @@
 import express from 'express';
 const router = express.Router()
 import mongoose from 'mongoose';
+import user from '../user/user_model';
 import User from '../user/user_model';
 //import Restaurant from '../restaurant/restaurant_model';
 
@@ -11,9 +12,9 @@ router.get('/getUser/:phoneNumber', async (req, res) => {
     const { phoneNumber } = req.params
 
     /*
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-      return res.status(404).json({error: 'No such workout'})
-    }
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({error: 'No such workout'})
+        }
     */
   
     await User.find({
@@ -64,18 +65,67 @@ router.post('/newUser', async (req, res) => {
         const newUserData = await User.create({ name, phoneNumber, favorites: [  ] })
         res.status(200).send({
             newUser: true,
-            user: newUserData
+            user: newUserData,
+            hasError: false
         })
       } else {
         res.status(200).send({
             newUser: false,
-            user: user[0]
+            user: user[0],
+            hasError: false
         })
       }
 
     } catch (error : any) {
-      res.status(400).json({ error: error.message })
+      res.status(400).send({ hasError: error })
     }
+})
+
+router.post('/addFavorites', async (req, res) => {
+
+    const {
+        body: {
+            phoneNumber,
+            newFavorites
+        }
+    } = req;
+
+    try {
+        let user = await User.find({ phoneNumber }).then((response) => response);
+        
+        if (user.length === 0) {
+            res.status(200).send({ hasError: true, userExists: false });
+        } else {
+            user = user[0];
+
+            const uniqueFavorites = [ ...(user.favorites) ];
+            for (const newFavorite in newFavorites) {
+
+                let foundFavorite = false;
+                for (const favorite in user.favorites) {
+                    if (newFavorite["place_id"] === favorite["place_id"]) {
+                        foundFavorite = true;
+                        break;
+                    }
+                }
+
+                if (!foundFavorite) {
+                    uniqueFavorites.push(newFavorite);
+                }
+            }
+
+            await User.update({ phoneNumber }, {
+                $set: { favorites: uniqueFavorites }
+            });
+
+            res.status(200);
+
+        }
+
+    } catch (error : any) {
+        res.status(400).send({ hasError: true, error });
+    };
+
 })
 
 // DELETE
