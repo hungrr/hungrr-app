@@ -3,20 +3,17 @@
 import express from 'express';
 const router = express.Router()
 import mongoose from 'mongoose';
+import { isConstructSignatureDeclaration } from 'typescript';
 import user from './user_model';
 import User from './user_model';
+import IUser from './user_model';
+
 //import Restaurant from '../restaurant/restaurant_model';
 
-// GET
+// Get User
 router.get('/getUser/:phoneNumber', async (req, res) => {
     const { phoneNumber } = req.params
 
-    /*
-        if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(404).json({error: 'No such workout'})
-        }
-    */
-  
     await User.find({
         phoneNumber
     }).then((response) => {
@@ -27,31 +24,8 @@ router.get('/getUser/:phoneNumber', async (req, res) => {
     }).catch((error) => {
         res.status(400).send({ error });
     })
-    
-    /*
-    if (!user) {
-      return res.status(404).json({error: 'No such workout'})
-    }
 
-    res.status(200).json(user)
-    */
 })
-
-
-// POST
-/*
-router.post('/', (req, res) => {
-    const {business_status, geometry, icon, icon_background_color, icon_mask_base_uri, name, opening_hours, photos, place_id, 
-        plus_code, price_level, rating, reference, scope, types, user_rating_totals, vicinity} = req.body
-    try {
-        const restaurant = Restaurant.create({business_status, geometry, icon, icon_background_color, icon_mask_base_uri, name, opening_hours, photos, place_id, 
-        plus_code, price_level, rating, reference, scope, types, user_rating_totals, vicinity})
-        res.status(200).json(restaurant)
-    } catch (error: any) {
-        res.status(400).json({error: error.message})
-    }
-})
-*/
 
 // Create User
 router.post('/newUser', async (req, res) => {
@@ -132,18 +106,67 @@ router.post('/addFavorites', async (req, res) => {
 })
 */
 
-// DELETE
-router.delete('/:id', (req, res) => {
-    res.json({mssg: 'DELETE single'})
+/*
+// Mason's attempt at the add favorites route
+// Typescript is not the vibe
+router.post('/addFavorites', async (req, res) => {
+
+    const { phoneNumber, favorites } = req.body
+
+    try {
+        const user = await User.find({ phoneNumber }).then((response) => response);
+        
+        if (!user) {
+            res.status(400).send({error: "no user found"});
+        } else {
+            const foundUser = user;
+            const oldFavorites = [...(foundUser.favorites)];
+            const allFavorites = [...(foundUser.favorites)]
+
+            for(let i = 0; i < favorites.length; i ++) {
+                if(oldFavorites[i] != favorites[i]){
+                    allFavorites.push(favorites)
+                }
+            }
+        }
+
+    } catch (error) {
+        res.status(400).send({ hasError: true, error });
+    }
+
+})
+*/
+
+// Delete User
+router.delete('/deleteUser', async (req, res) => {
+    const { phoneNumber } = req.body
+    // add to the database
+    try {
+        const user = await User.findOneAndDelete({ phoneNumber: phoneNumber });
+        if (!user) {
+            res.status(400).send({ error: "No user found" });
+        }
+        res.status(200).json(user);
+      } catch (error) {
+        console.log(error);
+      }
 })
 
-router.delete('/', (req, res) => {
-    res.json({mssg: 'DELETE all'})
-})
-
-// UPDATE
-router.patch('/:id', (req, res) => {
-    res.json({mssg: 'UPDATE'})
+// Update User
+router.patch('/updateUser', async (req, res) => {
+    const { phoneNumber } = req.body
+    // Update user in database
+    try {
+        const user = await User.findOneAndUpdate({ phoneNumber: phoneNumber }, {
+            ...req.body
+        });
+        if (!user) {
+            res.status(400).send({ error: "No user found" });
+        }
+        res.status(200).json(user);
+      } catch (error) {
+        console.log(error);
+      }
 })
 
 // Export functions

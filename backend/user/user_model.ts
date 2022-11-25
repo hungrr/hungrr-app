@@ -6,6 +6,7 @@ const Schema = mongoose.Schema
 export interface IUser extends mongoose.Document {
     name: string,
     phonenum: string,
+    favorites: Array<string>
 }
 
 export const userSchema = new Schema({
@@ -18,10 +19,10 @@ export const userSchema = new Schema({
         required: true
     },
     favorites: {
-        type: Array,
+        type: Array<string>,
         required: true
     }
 })
 
-const user = mongoose.model<IUser>('User', userSchema);
-export default user;
+const User = mongoose.model<IUser>('User', userSchema);
+export default User;
