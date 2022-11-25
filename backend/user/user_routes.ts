@@ -55,60 +55,70 @@ router.post('/newUser', async (req, res) => {
     }
 })
 
-/*
+
 router.post('/addFavorites', async (req, res) => {
 
+    /*
     const {
         body: {
             phoneNumber,
             newFavorites
         }
     } = req;
+    */
+   const { phoneNumber, favorites } = req.body;
+
 
     try {
-        let user = await User.find({ phoneNumber }).then((response) => response);
+        const user = await User.find({ phoneNumber }).then((response) => response);
         
         if (user.length === 0) {
-            res.status(200).send({ hasError: true, userExists: false });
+            res.status(400).send({error: "No user found"});
         } else {
 
             const foundUser = user[0];
 
-            const uniqueFavorites = [ ...(foundUser.favorites) ];
+            const uniqueFavorites = foundUser.favorites;
+            console.log(uniqueFavorites)
+            console.log(favorites)
 
-            for (let x = 0; x < newFavorites.length; ++x) {
+            for (let x = 0; x < favorites.length; ++x) {
                 let foundFavorite = false;
 
                 for (let y = 0; y < uniqueFavorites.length; ++y) {
-                    if (uniqueFavorites[x].place_id === newFavorites[x].place_id) {
+                    if (uniqueFavorites[y] === favorites[x]) {
                         foundFavorite = true;
                         break;
                     }
                 }
 
                 if (!foundFavorite) {
-                    uniqueFavorites.push(newFavorites[x]);
+                    uniqueFavorites.push(favorites[x]);
                 }
             }
 
-            await User.update({ phoneNumber }, {
+            await User.updateOne({ phoneNumber }, {
                 $set: { favorites: uniqueFavorites }
             });
 
-            res.status(200);
+            res.status(200).json(user);
 
         }
 
     } catch (error) {
-        res.status(400).send({ hasError: true, error });
-    };
+        console.log(error)
+        //res.status(400).send({ hasError: true, error });
+    }
 
 })
-*/
+
 
 /*
-// Mason's attempt at the add favorites route
-// Typescript is not the vibe
+Mason's attempt at the add favorites route: Typescript is not the vibe
+
+Leaving this in the push to note that line 133 and 134 did not work in this function yet the
+same exact line using the same exact code worked in zain's function and there's no good explanation as to why.
+
 router.post('/addFavorites', async (req, res) => {
 
     const { phoneNumber, favorites } = req.body
