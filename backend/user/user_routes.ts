@@ -141,41 +141,6 @@ router.post('/removeFavorite', async(req, res) => {
     }
 });
 
-
-/*
-Mason's attempt at the add favorites route: Typescript is not the vibe
-
-Leaving this in the push to note that line 133 and 134 did not work in this function yet the
-same exact line using the same exact code worked in zain's function and there's no good explanation as to why.
-
-router.post('/addFavorites', async (req, res) => {
-
-    const { phoneNumber, favorites } = req.body
-
-    try {
-        const user = await User.find({ phoneNumber }).then((response) => response);
-        
-        if (!user) {
-            res.status(400).send({error: "no user found"});
-        } else {
-            const foundUser = user;
-            const oldFavorites = [...(foundUser.favorites)];
-            const allFavorites = [...(foundUser.favorites)]
-
-            for(let i = 0; i < favorites.length; i ++) {
-                if(oldFavorites[i] != favorites[i]){
-                    allFavorites.push(favorites)
-                }
-            }
-        }
-
-    } catch (error) {
-        res.status(400).send({ hasError: true, error });
-    }
-
-})
-*/
-
 // Delete User
 router.delete('/deleteUser', async (req, res) => {
     const { phoneNumber } = req.body
