@@ -18,17 +18,18 @@ router.get('/getPlaces', async (req, res) => {
   const request = await fetch('https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=restaurant&location='+ location + '&radius=' + radius + '&key=' + key);
   const data = await request.json();
   const results = data.results;
-  console.log(results[0].price_level)
   
   const places = [];
   for(let i = 0; i < results.length; i++) {
+    const img = results[i].photos.photo_reference;
+    const photolink = 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference='+img+'&key='+key;
     const restaurant = {
       name: results[i].name,
       place_id: results[i].place_id,
       vicinity: results[i].vicinity,
       business_status: data.results[i].business_status,
       opening_hours: results[i].opening_hours,
-      photos: results[i].photos,
+      photos: photolink,
       price_level: results[i].price_level,
       rating: results[i].rating,
       user_ratings_total: results[i].user_ratings_total
