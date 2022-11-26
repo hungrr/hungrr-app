@@ -5,7 +5,7 @@ const Schema = mongoose.Schema
 
 export interface IUser extends mongoose.Document {
     name: string,
-    phonenum: string,
+    phoneNumber: string,
     favorites: Array<string>
 }
 
