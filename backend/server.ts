@@ -4,6 +4,7 @@ import bodyparser from 'body-parser';
 import mongoose from 'mongoose';
 //import loginRoutes from './login/login_routes';
 import userroutes from './user/user_routes';
+import googleMaps from './restaurant/googleMaps';
 
 dotenv.config();
 
@@ -22,6 +23,7 @@ app.use((req, res, next) => {
 // routes
 //app.use('/api/login',loginRoutes)
 app.use('/api/user', userroutes)
+app.use('/api/places', googleMaps);
 
 /*
 // listen for requests

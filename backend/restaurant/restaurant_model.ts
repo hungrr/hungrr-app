@@ -4,8 +4,6 @@ const Schema = mongoose.Schema
 
 export interface IRestaurant extends mongoose.Document {
     business_status : string,
-    // geometry.location is the coordinates of the place which is probably all we need
-    geometry: object,
     // we don't need the icon, that's just the default Google Maps pin
     // icon: string,
     // icon_background_color: string;
@@ -23,17 +21,12 @@ export interface IRestaurant extends mongoose.Document {
     // scope: string,
     // types: object, // WRONG
     user_ratings_total: number,
-    // geometry.location probably has a better precise location
-    // vicinity: string
+    vicinity: string
 }
 
 export const restaurantSchema = new Schema({
     business_status: {
         type: String,
-        required: true
-    },
-    geometry: {
-        type: Object,
         required: true
     },
     name: {
@@ -64,6 +57,10 @@ export const restaurantSchema = new Schema({
         type: Number,
         required: true
     },
+    vicinity: {
+        type: String,
+        required: true
+    }
 }, { timestamps: true});
 
 const restaurant = mongoose.model<IRestaurant>('Restaurant', restaurantSchema);

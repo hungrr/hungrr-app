@@ -3,10 +3,7 @@
 import express from 'express';
 const router = express.Router()
 import mongoose from 'mongoose';
-import { isConstructSignatureDeclaration } from 'typescript';
-import user from './user_model';
 import User from './user_model';
-import IUser from './user_model';
 
 //import Restaurant from '../restaurant/restaurant_model';
 
@@ -55,17 +52,9 @@ router.post('/newUser', async (req, res) => {
     }
 })
 
-
+// Append new favorites to user's favorites list
 router.post('/addFavorites', async (req, res) => {
 
-    /*
-    const {
-        body: {
-            phoneNumber,
-            newFavorites
-        }
-    } = req;
-    */
    const { phoneNumber, favorites } = req.body;
 
 
@@ -111,6 +100,46 @@ router.post('/addFavorites', async (req, res) => {
     }
 
 })
+
+// Delete single favorite
+router.post('/removeFavorite', async(req, res) => {
+
+    const { phoneNumber, deleteFavorite } = req.body;
+
+    try {
+        const user = await User.find({ phoneNumber }).then((response) => response);
+        
+        if (user.length === 0) {
+            res.status(400).send({error: "No user found"});
+        } else {
+
+            const foundUser = user[0];
+
+            const oldFavorites = foundUser.favorites;
+            const newFavorites = [];
+            console.log('old' , oldFavorites)
+
+            for (let x = 0; x < oldFavorites.length; ++x) {
+                if(oldFavorites[x] !== deleteFavorite) {
+                    newFavorites.push(oldFavorites[x]);
+                }
+            }
+            console.log('new', newFavorites);
+
+            await User.updateOne({ phoneNumber }, {
+                $set: { favorites: newFavorites }
+            });
+    
+            res.status(200).json(user);
+
+        }
+
+
+    } catch (error) {
+        console.log(error)
+        //res.status(400).send({ hasError: true, error });
+    }
+});
 
 
 /*
