@@ -1,12 +1,11 @@
 import { addTextAndPropsToStrings } from 'native-base';
+import { background, color } from 'native-base/lib/typescript/theme/styled-system';
 import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, Button, Image, StyleSheet } from 'react-native';
 import LogoTitle from '../components/LogoTitle';
 
 
 const Login = () => {
-
-  
   // Declare the state functionality for the phone number text input
   const [ phoneNumber, setPhoneNumber ] = useState<string>("");
 
@@ -43,10 +42,10 @@ const Login = () => {
 
   const LoginLanding = () => {
     return (
-      <View>
+      <View style={styles.login}>
         <LogoTitle />
         <Text>Enter the login page</Text>
-        <TextInput onChangeText={verifyInput} value={phoneNumber}>
+        <TextInput style={styles.input} onChangeText={verifyInput} value={phoneNumber}>
           { phoneNumber }
         </TextInput>
 
@@ -68,6 +67,7 @@ const Login = () => {
             onPress={() => {
               setVerificationCode("");
               setLoginLanding(-1);
+              
             }}
           />
         </View>
@@ -100,7 +100,28 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "center",
     alignItems: "center"
+  },
+  login: {
+    backgroundColor: 'white',
+    width: '100%',
+    height: '100%',
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  logo: {
+    flex: 1,
+    
+  },
+  input: {
+    flex: 0.1,
+    backgroundColor: 'white',
+    borderColor: '#e8e8e8',
+    borderWidth: 1,
+    width: '75%',
+    
   }
+
 });
 
 export default Login;

@@ -63,7 +63,7 @@ const MainContainer = () =>
                             color: 'white'
                         },
                     })}>
-                    <Tab.Screen name={homeName} component={HomeScreen} options={{headerTitle: (props: any) => <LogoTitle {...props}/>, tabBarActiveTintColor: '#74C7B8', tabBarInactiveTintColor: 'white'}} />
+                    <Tab.Screen name={homeName} component={HomeScreen} options={{headerTitle: (props: any) => <LogoTitle {...props} style={styles.logo}/>, tabBarActiveTintColor: '#74C7B8', tabBarInactiveTintColor: 'white'}} />
                     <Tab.Screen name={favoritesName} component={FavoritesScreen} options={{tabBarActiveTintColor: '#74C7B8', tabBarInactiveTintColor: 'white'}}/>
                     <Tab.Screen name={settingsName} component={SettingsScreen} options={{tabBarActiveTintColor: '#74C7B8', tabBarInactiveTintColor: 'white'}}/>
                     <Tab.Screen name={profileName} component={ProfileScreen} options={{tabBarActiveTintColor: '#74C7B8', tabBarInactiveTintColor: 'white'}}/>
@@ -73,5 +73,13 @@ const MainContainer = () =>
         </>
     )
 }
+
+const styles = StyleSheet.create({
+    logo: {
+        resizeMode: 'contain',
+        transform: [{scale: 0.65}]
+    }
+})
+
 
 export default MainContainer;

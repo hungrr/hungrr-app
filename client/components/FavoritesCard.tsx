@@ -8,7 +8,8 @@ import {
   ScrollView,
 } from "native-base";
 import { FavoritesCardProp } from "../Types and Interfaces/types";
-import Ionicons from 'react-native-vector-icons/Ionicons'
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
 
 
 export default function FavoritesCard(props:FavoritesCardProp){

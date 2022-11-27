@@ -3,7 +3,6 @@
 This file stores prop / component types across the application. Previously stored in component files, this makes a "global" store of types
 
 */
-
 import {
     Text,
     Image,
@@ -33,6 +32,6 @@ export type FavoriteRestaurant = {
     rating: number;
 };
 
-export type FavoritesCardProp ={
+export type FavoritesCardProp = {
     favorites: FavoriteRestaurant;
 }
