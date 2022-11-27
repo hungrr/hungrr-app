@@ -33,11 +33,9 @@ export default function Profile({ name, phoneNumber }:{ name:string, phoneNumber
             <Text>{name}</Text>
             <Text>{phoneNumber}</Text>
             <Pressable>
-                <Button onPress={() => {
+                <Button title="Delete profile" onPress={() => {
 
-                }}>
-                    Delete Profile
-                </Button>
+                }} />
             </Pressable>
         </View>
     )
