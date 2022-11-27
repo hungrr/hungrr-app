@@ -17,8 +17,8 @@ const Login = () => {
   
   // This function verifies the text input to be only digits and with a maximum length of 10
   const verifyInput = (input:string) => {
-    if (/[0-9]*/gi.test(input) && input.length <= 10)
-    setPhoneNumber(input);
+    if (input.length === 0 || (input.charCodeAt(input.length-1) >= 48 && input.charCodeAt(input.length-1) <= 57) )
+      setPhoneNumber(input);
   };
 
   // Formats the phone number to outline area code and parts of the phone number
