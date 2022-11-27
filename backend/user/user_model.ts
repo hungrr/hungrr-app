@@ -6,7 +6,8 @@ const Schema = mongoose.Schema
 export interface IUser extends mongoose.Document {
     name: string,
     phoneNumber: string,
-    favorites: Array<string>
+    favorites: Array<string>,
+    latestVerificationCode: string
 }
 
 export const userSchema = new Schema({
@@ -21,6 +22,10 @@ export const userSchema = new Schema({
     favorites: {
         type: Array<string>,
         required: true
+    },
+    latestVerificationCode: {
+        type: String,
+        required: false
     }
 })
 

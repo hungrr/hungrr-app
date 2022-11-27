@@ -4,8 +4,21 @@ import express from 'express';
 const router = express.Router()
 import mongoose from 'mongoose';
 import User from './user_model';
+import twilioClient from "../login/twilioClient";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 //import Restaurant from '../restaurant/restaurant_model';
+
+let generateCode = (length:number):string => {
+    let code = "";
+    
+    while (code.length !== length)
+        code += `${Math.floor(Math.random()*10)}`;
+
+    return code;
+};
 
 // Get User
 router.get('/getUser/:phoneNumber', async (req, res) => {
@@ -31,25 +44,58 @@ router.post('/newUser', async (req, res) => {
     // add to the database
     try {
       const user = await User.find({ phoneNumber }).then((response) => response);
+      const isNewUser = user.length === 0;
+      
+      const verificationCode = generateCode(6);
+      
+      let newUserData = null;
+      if (isNewUser)
+        newUserData = await User.create({ name, phoneNumber, favorites: [  ] })
+      
+      twilioClient.messages.create({
+          body: `Your Hungrr verification code is: ${verificationCode}`,
+          from: process.env.TWILIO_FROM_PHONE_NUMBER,
+          to: process.env.TWILIO_TO_PHONE_NUMBER
+      });
 
-      if (user.length === 0) {
-        const newUserData = await User.create({ name, phoneNumber, favorites: [  ] })
-        res.status(200).send({
-            newUser: true,
-            user: newUserData,
-            hasError: false
-        })
-      } else {
-        res.status(200).send({
-            newUser: false,
-            user: user[0],
-            hasError: false
-        })
-      }
+      await User.updateOne({ phoneNumber }, {
+        $set: { latestVerificationCode: verificationCode }
+      });
+
+      res.status(200).send({
+        userExists: isNewUser,
+        user: isNewUser ? user[0] : { name, phoneNumber, favorites: [] }
+      })
 
     } catch (error) {
-      res.status(400).send({ hasError: error })
+      res.status(400).send({ hasError: true, error })
     }
+})
+
+// Verify user
+
+router.post("/verify", async (req, res) => {
+    const { body: {
+        phoneNumber, verificationCodeAttempt
+    } } = req;
+
+
+    const userData = await User.find({ phoneNumber }).then((response => response));
+
+    if (userData.length === 0) {
+        res.status(200).send({
+            userExists: false,
+            verified: false
+        });
+    } else {
+
+        res.send({
+            userExists: true,
+            verified: verificationCodeAttempt === userData[0].latestVerificationCode
+        });
+
+    }
+
 })
 
 // Append new favorites to user's favorites list
