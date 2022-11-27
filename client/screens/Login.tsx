@@ -52,17 +52,12 @@ const LoginVerifyLanding = ({ setVerificationCode, verificationCode, verifyCode 
   );
 };
 
-const Login = () => {
+const Login = ({ loginState, setLoginState }: { loginState:any, setLoginState:Function }) => {
   // Declare the state functionality for the phone number text input
   const [ phoneNumber, setPhoneNumber ] = useState<string>("");
 
   // Declare the state functionality or the verification code text input
   const [ verificationCode, setVerificationCode ] = useState<string>("");
-
-
-  // Declare the state functionality for the login landing page view
-  // -1 for phone number input and 0 for verification code page
-  const [ showLoginLanding, setLoginLanding ] = useState<number>(-1);
 
   // Formats the phone number to outline area code and parts of the phone number
   const formatPhoneNumber = () => { 
@@ -73,11 +68,11 @@ const Login = () => {
   // Makes API request to the backend
   const requestCode = async () => {
     // const data = await axios.post();
-    setLoginLanding(0);
+    setLoginState({ ...loginState, loginView: 0 });
   };
 
   const verifyCode = async () => {
-    setLoginLanding(1);
+    setLoginState({ ...loginState, loginView: 1 });
   };
 
   useEffect(() => {
@@ -85,26 +80,14 @@ const Login = () => {
 
   }, [  ]);
 
-
-
-
-
-
   return (
 
     <View style={{ ...styles.container  }}>
       {
-        showLoginLanding === -1 ?
+        loginState.loginView === -1 ?
           <LoginLanding { ...{setPhoneNumber, phoneNumber, requestCode} } />
           :
-          
-          
-          (
-            showLoginLanding === 0 ?
-            <LoginVerifyLanding {...{setVerificationCode, verificationCode, verifyCode}}  />
-            :
-            <MainContainer />
-          )
+          <LoginVerifyLanding {...{setVerificationCode, verificationCode, verifyCode}}  />
       }
     </View>
   );

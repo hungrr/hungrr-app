@@ -10,7 +10,8 @@ export default function App() {
 
   const [ loginState, setLoginState ] = useState({
     attemptedLogin: false,
-    loggedIn: false
+    loggedIn: false,
+    loginView: -1
   });
 
   useEffect(() => {
@@ -19,9 +20,12 @@ export default function App() {
 
   return (
     <SafeAreaProvider>
-      {/* <Navigation />
-      <StatusBar /> */}
-      <Login/>
+      {
+        loginState.loginView !== 1 ?
+        <Login { ...{loginState, setLoginState} } />
+        :
+        <Navigation />
+      }
     </SafeAreaProvider>
   );
 }
