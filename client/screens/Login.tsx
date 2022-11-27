@@ -14,11 +14,6 @@ const Login = () => {
   // Declare the state functionality for the login landing page view
   // -1 for phone number input and 0 for verification code page
   const [ showLoginLanding, setLoginLanding ] = useState<number>(-1);
-  
-  // This function verifies the text input to be only digits and with a maximum length of 10
-  const verifyInput = (input:string) => {
-      setPhoneNumber(input);
-  };
 
   // Formats the phone number to outline area code and parts of the phone number
   const formatPhoneNumber = () => {
@@ -43,7 +38,7 @@ const Login = () => {
         <View style={styles.login}>
           <Image style={styles.logo} source={require('../assets/images/logo.png')}/>
           <Text style={styles.message}>Enter Your Phone Number</Text>
-          <TextInput style={styles.input} onChangeText={verifyInput} value={phoneNumber} keyboardType={"numeric"}>
+          <TextInput style={styles.input} onChangeText={(phoneNumberInputText:string) => setPhoneNumber(phoneNumberInputText)} defaultValue={phoneNumber} keyboardType={"numeric"}>
             { phoneNumber }
           </TextInput>
           <Pressable style={styles.submit}>
