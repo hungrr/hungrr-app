@@ -83,7 +83,6 @@ const styles = StyleSheet.create({
   },
   name: {
     color: "white",
-    fontFamily: "lucida grande",
     fontWeight: "bold",
     fontSize: 24,
     position: "absolute",

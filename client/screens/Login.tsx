@@ -1,9 +1,7 @@
 import { addTextAndPropsToStrings } from 'native-base';
 import { background, color } from 'native-base/lib/typescript/theme/styled-system';
 import React, { useEffect, useState } from 'react';
-import { View, Text, TextInput, Button, Image, StyleSheet } from 'react-native';
-import LogoTitle from '../components/LogoTitle';
-
+import { View, Text, TextInput, Button, Image, StyleSheet, Pressable } from 'react-native';
 
 const Login = () => {
   // Declare the state functionality for the phone number text input
@@ -42,20 +40,24 @@ const Login = () => {
 
   const LoginLanding = () => {
     return (
-      <View style={styles.login}>
-        <LogoTitle />
-        <Text>Enter the login page</Text>
-        <TextInput style={styles.input} onChangeText={verifyInput} value={phoneNumber}>
-          { phoneNumber }
-        </TextInput>
+      <>
+        <View style={styles.login}>
+          <Image style={styles.logo} source={require('../assets/images/logo.png')}/>
+          <Text style={styles.message}>Enter Your Phone Number</Text>
+          <TextInput style={styles.input} onChangeText={verifyInput} value={phoneNumber}>
+            { phoneNumber }
+          </TextInput>
+          <Pressable style={styles.submit}>
+            <Button color={'black'} title="Submit" onPress={() => {
+                if (phoneNumber.length === 10) {
+                  requestCode();
+                }
+              }}
+            />
+          </Pressable>
 
-        <Button title="SUBMIT" onPress={() => {
-            if (phoneNumber.length === 10) {
-              requestCode();
-            }
-          }}
-        />
-      </View>
+        </View>
+      </>
     );
   };
 
@@ -67,12 +69,11 @@ const Login = () => {
             onPress={() => {
               setVerificationCode("");
               setLoginLanding(-1);
-              
             }}
           />
         </View>
         <View>
-          <Text>Please enter the verification code </Text>
+          <Text> Please enter the verification code </Text>
           <TextInput onChangeText={setVerificationCode} value={verificationCode} />
           <Button title="Submit" />
         </View>
@@ -102,16 +103,12 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   login: {
-    backgroundColor: 'white',
+    backgroundColor: '#EE8980',
     width: '100%',
     height: '100%',
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
-  },
-  logo: {
-    flex: 1,
-    
   },
   input: {
     flex: 0.1,
@@ -119,9 +116,22 @@ const styles = StyleSheet.create({
     borderColor: '#e8e8e8',
     borderWidth: 1,
     width: '75%',
-    
-  }
+    borderRadius: 10
+  },
+  message: {
+    fontWeight: 'bold',
+    fontSize: 18
+  },
+  logo: {
+    width: 100,
+    height: 250,
+  },
+  submit: {
+    backgroundColor: '#FFCDAA',
+    marginTop: 10,
+    borderRadius: 10,
 
+  }
 });
 
 export default Login;
