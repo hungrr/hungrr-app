@@ -9,7 +9,7 @@ const LoginLanding = ({ setPhoneNumber, phoneNumber }:{ setPhoneNumber:Function,
       <View style={styles.login}>
         <Image style={styles.logo} source={require('../assets/images/logo.png')}/>
         <Text style={styles.message}>Enter Your Phone Number</Text>
-        <TextInput style={styles.input} onChangeText={(text:string) => setPhoneNumber(text)} defaultValue={phoneNumber} keyboardType={"numeric"}>
+        <TextInput style={styles.input} onChangeText={(text:string) => setPhoneNumber(text)} value={phoneNumber} keyboardType={"numeric"}>
           { phoneNumber }
         </TextInput>
         <Pressable style={styles.submit}>
