@@ -17,7 +17,6 @@ const Login = () => {
   
   // This function verifies the text input to be only digits and with a maximum length of 10
   const verifyInput = (input:string) => {
-    if (input.length === 0 || (input.charCodeAt(input.length-1) >= 48 && input.charCodeAt(input.length-1) <= 57) )
       setPhoneNumber(input);
   };
 
@@ -44,7 +43,7 @@ const Login = () => {
         <View style={styles.login}>
           <Image style={styles.logo} source={require('../assets/images/logo.png')}/>
           <Text style={styles.message}>Enter Your Phone Number</Text>
-          <TextInput style={styles.input} onChangeText={verifyInput} value={phoneNumber}>
+          <TextInput style={styles.input} onChangeText={verifyInput} value={phoneNumber} keyboardType={"numeric"}>
             { phoneNumber }
           </TextInput>
           <Pressable style={styles.submit}>
