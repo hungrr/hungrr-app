@@ -3,6 +3,30 @@ import { background, color } from 'native-base/lib/typescript/theme/styled-syste
 import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, Button, Image, StyleSheet, Pressable } from 'react-native';
 
+const LoginLanding = ({ setPhoneNumber, phoneNumber }:{ setPhoneNumber:Function, phoneNumber:string }) => {
+  return (
+    <>
+      <View style={styles.login}>
+        <Image style={styles.logo} source={require('../assets/images/logo.png')}/>
+        <Text style={styles.message}>Enter Your Phone Number</Text>
+        <TextInput style={styles.input} onChangeText={(text:string) => setPhoneNumber(text)} defaultValue={phoneNumber} keyboardType={"numeric"}>
+          { phoneNumber }
+        </TextInput>
+        <Pressable style={styles.submit}>
+          <Button color={'black'} title="Submit" onPress={() => {
+              if (phoneNumber.length === 10) {
+                requestCode();
+              }
+            }}
+          />
+        </Pressable>
+
+      </View>
+    </>
+  );
+};
+
+
 const Login = () => {
   // Declare the state functionality for the phone number text input
   const [ phoneNumber, setPhoneNumber ] = useState<string>("");
@@ -16,7 +40,7 @@ const Login = () => {
   const [ showLoginLanding, setLoginLanding ] = useState<number>(-1);
 
   // Formats the phone number to outline area code and parts of the phone number
-  const formatPhoneNumber = () => {
+  const formatPhoneNumber = () => { 
     const splitted = phoneNumber.split("");
     return `(${splitted.slice(0,3).join("")})-${splitted.slice(3,6).join("")}-${splitted.slice(6,10).join("")}`;
   };
@@ -32,28 +56,7 @@ const Login = () => {
 
   }, [  ]);
 
-  const LoginLanding = () => {
-    return (
-      <>
-        <View style={styles.login}>
-          <Image style={styles.logo} source={require('../assets/images/logo.png')}/>
-          <Text style={styles.message}>Enter Your Phone Number</Text>
-          <TextInput style={styles.input} onChangeText={(phoneNumberInputText:string) => setPhoneNumber(phoneNumberInputText)} defaultValue={phoneNumber} keyboardType={"numeric"}>
-            { phoneNumber }
-          </TextInput>
-          <Pressable style={styles.submit}>
-            <Button color={'black'} title="Submit" onPress={() => {
-                if (phoneNumber.length === 10) {
-                  requestCode();
-                }
-              }}
-            />
-          </Pressable>
 
-        </View>
-      </>
-    );
-  };
 
   const LoginVerifyLanding = () => {
     return (
@@ -80,7 +83,7 @@ const Login = () => {
     <View style={{ ...styles.container  }}>
       {
         showLoginLanding === -1 ?
-          <LoginLanding />
+          <LoginLanding { ...{setPhoneNumber, phoneNumber} } />
           :
           <LoginVerifyLanding />
       }
