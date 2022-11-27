@@ -31,26 +31,26 @@ const MainContainer = () =>
                             let iconColor = 'white';
                             if (rn === homeName) {
                                 iconName = focused ? 'home' : 'home-outline';
-                                iconColor = focused ? '#F14666' : 'white'; 
+                                iconColor = focused ? '#F8D49B' : 'white'; 
                             }
                             else if (rn === favoritesName) {
                                 iconName = focused ? 'list' : 'list-outline';
-                                iconColor = focused ? '#F14666' : 'white';
+                                iconColor = focused ? '#F8D49B' : 'white';
                             }
                             else if (rn === profileName)
                             {
                                 iconName = focused ? 'person-circle' : 'person-circle-outline';
-                                iconColor = focused ? '#F14666' : 'white';
+                                iconColor = focused ? '#F8D49B' : 'white';
                             }
                             return <Ionicons name={iconName} size={size} color={iconColor} />;
                         },
                         headerStyle:{
-                            backgroundColor: '#FFCDAA',
+                            backgroundColor: '#EE8980',
                             borderRadius: 10,
                             height: 110
                         },
                         tabBarStyle: {
-                            backgroundColor: '#FFCDAA',
+                            backgroundColor: '#EE8980',
                             borderRadius: 10,
                             height: 90,
                         },
@@ -58,9 +58,9 @@ const MainContainer = () =>
                             color: 'white'
                         },
                     })}>
-                    <Tab.Screen name={homeName} component={HomeScreen} options={{headerTitle: (props: any) => <LogoTitle {...props}/>, tabBarActiveTintColor: '#F14666', tabBarInactiveTintColor: 'white'}} />
-                    <Tab.Screen name={favoritesName} component={FavoritesScreen} options={{tabBarActiveTintColor: '#F14666', tabBarInactiveTintColor: 'white'}}/>
-                    <Tab.Screen name={profileName} component={ProfileScreen} options={{tabBarActiveTintColor: '#F14666', tabBarInactiveTintColor: 'white'}}/>
+                    <Tab.Screen name={homeName} component={HomeScreen} options={{headerTitle: (props: any) => <LogoTitle {...props}/>, tabBarActiveTintColor: '#F8D49B', tabBarInactiveTintColor: 'white'}} />
+                    <Tab.Screen name={favoritesName} component={FavoritesScreen} options={{tabBarActiveTintColor: '#F8D49B', tabBarInactiveTintColor: 'white'}}/>
+                    <Tab.Screen name={profileName} component={ProfileScreen} options={{tabBarActiveTintColor: '#F8D49B', tabBarInactiveTintColor: 'white'}}/>
                 </Tab.Navigator>
                 
             </NavigationContainer>
