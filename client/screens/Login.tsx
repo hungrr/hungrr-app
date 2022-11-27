@@ -3,15 +3,13 @@ import { background, color } from 'native-base/lib/typescript/theme/styled-syste
 import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, Button, Image, StyleSheet, Pressable } from 'react-native';
 
-const LoginLanding = ({ setPhoneNumber, phoneNumber }:{ setPhoneNumber:Function, phoneNumber:string }) => {
+const LoginLanding = ({ setPhoneNumber, phoneNumber, requestCode }:{ setPhoneNumber:Function, phoneNumber:string, requestCode:Function }) => {
   return (
     <>
       <View style={styles.login}>
         <Image style={styles.logo} source={require('../assets/images/logo.png')}/>
         <Text style={styles.message}>Enter Your Phone Number</Text>
-        <TextInput style={styles.input} onChangeText={(text:string) => setPhoneNumber(text)} value={phoneNumber} keyboardType={"numeric"}>
-          { phoneNumber }
-        </TextInput>
+        <TextInput style={styles.input} onChangeText={(text:string) => setPhoneNumber(text)} value={phoneNumber} keyboardType={"numeric"} />
         <Pressable style={styles.submit}>
           <Button color={'black'} title="Submit" onPress={() => {
               if (phoneNumber.length === 10) {
@@ -83,7 +81,7 @@ const Login = () => {
     <View style={{ ...styles.container  }}>
       {
         showLoginLanding === -1 ?
-          <LoginLanding { ...{setPhoneNumber, phoneNumber} } />
+          <LoginLanding { ...{setPhoneNumber, phoneNumber, requestCode} } />
           :
           <LoginVerifyLanding />
       }
