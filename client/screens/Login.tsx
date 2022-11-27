@@ -2,6 +2,7 @@ import { addTextAndPropsToStrings } from 'native-base';
 import { background, color } from 'native-base/lib/typescript/theme/styled-system';
 import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, Button, Image, StyleSheet, Pressable } from 'react-native';
+import MainContainer from '../navigation/MainContainer';
 
 const LoginLanding = ({ setPhoneNumber, phoneNumber, requestCode }:{ setPhoneNumber:Function, phoneNumber:string, requestCode:Function }) => {
   return (
@@ -24,6 +25,32 @@ const LoginLanding = ({ setPhoneNumber, phoneNumber, requestCode }:{ setPhoneNum
   );
 };
 
+const LoginVerifyLanding = ({ setVerificationCode, verificationCode, verifyCode  }:{  verifyCode:Function, setVerificationCode:Function, verificationCode:string }) => {
+  return (
+    <View style={styles.verifyPage}>
+      <View style={styles.back}>
+        <Pressable style={styles.backButton}>
+          <Button color='black' title="Back"
+            onPress={() => {
+              setVerificationCode("");
+            }}
+          />
+        </Pressable>
+
+      </View>
+      <View style={{flex: 0.1, justifyContent: 'center', alignItems: 'center'}}>
+        <Text style={styles.verificationMessage}> Please enter the verification code </Text>
+        <TextInput style={styles.verifyTextBox}  onChangeText={(text:string) => setVerificationCode(text) } value={verificationCode} />
+        <Pressable style={styles.submitVerification}>
+          <Button color='black' title="Submit" onPress={() => {
+            verifyCode();
+          }} />
+        </Pressable>
+        
+      </View>
+    </View>
+  );
+};
 
 const Login = () => {
   // Declare the state functionality for the phone number text input
@@ -49,6 +76,10 @@ const Login = () => {
     setLoginLanding(0);
   };
 
+  const verifyCode = async () => {
+    setLoginLanding(1);
+  };
+
   useEffect(() => {
     // for on component verification
 
@@ -56,31 +87,8 @@ const Login = () => {
 
 
 
-  const LoginVerifyLanding = () => {
-    return (
-      <View style={styles.verifyPage}>
-        <View style={styles.back}>
-          <Pressable style={styles.backButton}>
-            <Button color='black' title="Back"
-              onPress={() => {
-                setVerificationCode("");
-                setLoginLanding(-1);
-              }}
-            />
-          </Pressable>
 
-        </View>
-        <View style={{flex: 0.1, justifyContent: 'center', alignItems: 'center'}}>
-          <Text style={styles.verificationMessage}> Please enter the verification code </Text>
-          <TextInput style={styles.verifyTextBox}  onChangeText={setVerificationCode} value={verificationCode} />
-          <Pressable style={styles.submitVerification}>
-            <Button color='black' title="Submit" />
-          </Pressable>
-          
-        </View>
-      </View>
-    );
-  };
+
 
   return (
 
@@ -89,7 +97,14 @@ const Login = () => {
         showLoginLanding === -1 ?
           <LoginLanding { ...{setPhoneNumber, phoneNumber, requestCode} } />
           :
-          <LoginVerifyLanding />
+          
+          
+          (
+            showLoginLanding === 0 ?
+            <LoginVerifyLanding {...{setVerificationCode, verificationCode, verifyCode}}  />
+            :
+            <MainContainer />
+          )
       }
     </View>
   );

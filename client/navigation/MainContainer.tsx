@@ -14,7 +14,6 @@ import LogoTitle from '../components/LogoTitle';
 // Screen Names
 const homeName = 'Home';
 const favoritesName = 'Favorites';
-const settingsName = 'Settings';
 const profileName = 'Profile';
 const Tab = createBottomTabNavigator();
 
@@ -36,10 +35,6 @@ const MainContainer = () =>
                             }
                             else if (rn === favoritesName) {
                                 iconName = focused ? 'list' : 'list-outline';
-                                iconColor = focused ? '#F14666' : 'white';
-                            }
-                            else if (rn === settingsName) {
-                                iconName = focused ? 'settings' : 'settings-outline';
                                 iconColor = focused ? '#F14666' : 'white';
                             }
                             else if (rn === profileName)
@@ -65,7 +60,6 @@ const MainContainer = () =>
                     })}>
                     <Tab.Screen name={homeName} component={HomeScreen} options={{headerTitle: (props: any) => <LogoTitle {...props}/>, tabBarActiveTintColor: '#F14666', tabBarInactiveTintColor: 'white'}} />
                     <Tab.Screen name={favoritesName} component={FavoritesScreen} options={{tabBarActiveTintColor: '#F14666', tabBarInactiveTintColor: 'white'}}/>
-                    <Tab.Screen name={settingsName} component={SettingsScreen} options={{tabBarActiveTintColor: '#F14666', tabBarInactiveTintColor: 'white'}}/>
                     <Tab.Screen name={profileName} component={ProfileScreen} options={{tabBarActiveTintColor: '#F14666', tabBarInactiveTintColor: 'white'}}/>
                 </Tab.Navigator>
                 
