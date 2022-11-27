@@ -34,7 +34,7 @@ export default function Profile({ name, phoneNumber }:{ name:string, phoneNumber
             <Text>{phoneNumber}</Text>
             <Pressable>
                 <Button title="Delete profile" onPress={() => {
-
+                    createPopupDeleteProfile();
                 }} />
             </Pressable>
         </View>
