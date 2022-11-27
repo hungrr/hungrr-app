@@ -63,7 +63,7 @@ router.post('/newUser', async (req, res) => {
       });
 
       res.status(200).send({
-        userExists: isNewUser,
+        isNewUser,
         user: isNewUser ? user[0] : { name, phoneNumber, favorites: [] }
       })
 

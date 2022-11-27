@@ -19,26 +19,14 @@ router.get('/getPlaces', async (req, res) => {
   const data = await request.json();
   const results = data.results;
   
-  const places = [];
-  for(let i = 0; i < results.length; i++) {
-    const img = results[i].photos.photo_reference;
-    const photolink = 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference='+img+'&key='+key;
-    const restaurant = {
-      name: results[i].name,
-      place_id: results[i].place_id,
-      vicinity: results[i].vicinity,
-      business_status: data.results[i].business_status,
-      opening_hours: results[i].opening_hours,
-      photos: photolink,
-      price_level: results[i].price_level,
-      rating: results[i].rating,
-      user_ratings_total: results[i].user_ratings_total
-    };
-    places.push(restaurant)
-  }
-  
+  const places = results.map((restaurant:any) => {
+    return { ...restaurant, photoLink: `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${restaurant.photos[0].photo_reference}&key=${key}` };
+  })
 
-  res.status(200).json(places);
+  res.status(200).send({
+    results: places
+  });
+
 });
 
 // Export functions

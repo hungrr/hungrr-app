@@ -17,7 +17,8 @@
     "messagebird": "^3.8.1",
     "mongoose": "^6.7.3",
     "nodemon": "^2.0.20",
-    "ts-node": "^10.9.1"
+    "ts-node": "^10.9.1",
+    "twilio": "^3.83.3"
   },
   "devDependencies": {
     "@tsconfig/node16": "^1.0.3",
