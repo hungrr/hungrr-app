@@ -9,7 +9,7 @@ const LoginLanding = ({ setPhoneNumber, phoneNumber, requestCode }:{ setPhoneNum
       <View style={styles.login}>
         <Image style={styles.logo} source={require('../assets/images/logo.png')}/>
         <Text style={styles.message}>Enter Your Phone Number</Text>
-        <TextInput style={styles.input} onChangeText={(text:string) => setPhoneNumber(text)} value={phoneNumber} keyboardType={"numeric"} />
+        <TextInput style={styles.input} onChangeText={(text:string) => setPhoneNumber(text)} value={phoneNumber} keyboardType={"numeric"} returnKeyType='done' />
         <Pressable style={styles.submit}>
           <Button color={'black'} title="Submit" onPress={() => {
               if (phoneNumber.length === 10) {
@@ -58,19 +58,25 @@ const Login = () => {
 
   const LoginVerifyLanding = () => {
     return (
-      <View>
-        <View>
-          <Button title="Back"
-            onPress={() => {
-              setVerificationCode("");
-              setLoginLanding(-1);
-            }}
-          />
+      <View style={styles.verifyPage}>
+        <View style={styles.back}>
+          <Pressable style={styles.backButton}>
+            <Button color='black' title="Back"
+              onPress={() => {
+                setVerificationCode("");
+                setLoginLanding(-1);
+              }}
+            />
+          </Pressable>
+
         </View>
-        <View>
-          <Text> Please enter the verification code </Text>
-          <TextInput onChangeText={setVerificationCode} value={verificationCode} />
-          <Button title="Submit" />
+        <View style={{flex: 0.1, justifyContent: 'center', alignItems: 'center'}}>
+          <Text style={styles.verificationMessage}> Please enter the verification code </Text>
+          <TextInput style={styles.verifyTextBox}  onChangeText={setVerificationCode} value={verificationCode} />
+          <Pressable style={styles.submitVerification}>
+            <Button color='black' title="Submit" />
+          </Pressable>
+          
         </View>
       </View>
     );
@@ -103,7 +109,8 @@ const styles = StyleSheet.create({
     height: '100%',
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    paddingBottom: 200
   },
   input: {
     flex: 0.1,
@@ -111,7 +118,10 @@ const styles = StyleSheet.create({
     borderColor: '#e8e8e8',
     borderWidth: 1,
     width: '75%',
-    borderRadius: 10
+    borderRadius: 10,
+    padding: 8,
+    marginTop: 5
+    
   },
   message: {
     fontWeight: 'bold',
@@ -126,7 +136,43 @@ const styles = StyleSheet.create({
     marginTop: 10,
     borderRadius: 10,
 
+  },
+  back: {
+    bottom: 320,
+    right: 140
+  },
+  backButton: {
+    backgroundColor: '#FFCDAA',
+    width: 75,
+    borderRadius: 10
+  },
+  verifyPage: {
+    flex: 1,
+    flexDirection: "column",
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: '#EE8980'
+  },
+  verifyTextBox: {
+    backgroundColor: 'white',
+    borderRadius: 10,
+    width: 250,
+    padding: 10,
+    marginTop: 10,
+    marginBottom: 10
+  },
+  submitVerification: {
+    backgroundColor: '#FFCDAA',
+    marginTop: 10,
+    borderRadius: 10,
+    width: '75%'
+  },
+  verificationMessage: {
+    fontWeight: 'bold',
+    fontSize: 18
   }
+  
 });
 
 export default Login;
