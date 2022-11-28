@@ -8,6 +8,13 @@ import { Profile } from '../Types and Interfaces/types';
 
 export default function Favorites({ setFavorites, favorites }:any) {
 
+    const hash = (n=10) => {
+        let s = "";
+        while (s.length < n)
+            s += `${Math.floor(Math.random()*10)}`
+        return s;
+    }
+
     return (
         <NativeBaseProvider>
             <ScrollView contentContainerStyle={{ flexGrow: 1, alignItems: 'center', padding: 25 }}>
@@ -18,7 +25,7 @@ export default function Favorites({ setFavorites, favorites }:any) {
                                 No favorites... start swiping!
                             </Text>
                         :
-                        favorites.map((card:Profile) => <FavoritesCard {...card} />)
+                        favorites.map((card:Profile) => <FavoritesCard key={hash()} {...card} />)
                     )
                 }
             </ScrollView>

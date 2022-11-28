@@ -10,8 +10,6 @@ import {
 import { Profile } from "../Types and Interfaces/types";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-
-
 export default function FavoritesCard(props:Profile){
   return (
     <Box style={styles.container}>
