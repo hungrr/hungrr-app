@@ -1,15 +1,25 @@
 import { View, Text, Button, Pressable, Alert, StyleSheet, Image, TextInput } from 'react-native';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export default function Profile({ loginState, setLoginState }:any) {
     
-    const nameInitials = () => {
-        let name:string = 'Khoi Vu'
-        let initial:string = name[0]
-        return initial
-    }
+    const [ n, setN ] = useState<string>("");
+    const [ pn, setPN ] = useState<string>("");
+
+    useEffect(() => {
+        (async () => {
+            const name = await AsyncStorage.getItem("name") || "";
+            const phoneNumber = await AsyncStorage.getItem("phoneNumber") || "";
+
+            setN(name);
+            setPN(phoneNumber);
+        })();
+    }, [])
+
+    const setInitial = () => n.length === 0 ? "" : n[0].toUpperCase(); 
+    const formatPhoneNumber = () => `(${pn.slice(0,3)})-${pn.slice(3,6)}-${pn.slice(6,10)}`
 
     const logOut = async () => {
         try {
@@ -63,17 +73,11 @@ export default function Profile({ loginState, setLoginState }:any) {
             <View style={styles.infoContainer}>
                 {/* <Image style={styles.icon} source={require('../assets/images/profileIcon.png')}/> */}
                 <View style={styles.initials}>
-                    <Text style={styles.initialsText}>{nameInitials()}</Text>
+                    <Text style={styles.initialsText}>{setInitial()}</Text>
                 </View>
-                <Text style={styles.name}>Khoi Vu</Text>
-                <Text style={styles.phone}>phone</Text>
-                <Pressable style={styles.editProfile}>
-                    <Button color="black" title="Edit Profile"/>
-                </Pressable>
-                <TextInput style={styles.textbox} value='  Edit Name' returnKeyType='done'/>
+                <Text style={styles.name}>{ n }</Text>
+                <Text style={styles.phone}>{ formatPhoneNumber() }</Text>
             </View>
-
-
         </View>
     )
 }

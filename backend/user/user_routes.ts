@@ -85,13 +85,14 @@ router.post("/verify", async (req, res) => {
     if (userData.length === 0) {
         res.status(200).send({
             userExists: false,
-            verified: false
+            verified: false,
         });
     } else {
 
         res.send({
             userExists: true,
-            verified: verificationCodeAttempt === userData[0].latestVerificationCode
+            verified: verificationCodeAttempt === userData[0].latestVerificationCode,
+            name: userData[0].name
         });
 
     }

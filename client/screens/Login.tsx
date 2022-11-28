@@ -33,15 +33,16 @@ const LoginVerifyLanding = ({ setVerificationCode, verificationCode, setLoginSta
     const data = await axios.post("http://localhost:3000/api/user/verify", {
       phoneNumber: loginState.phoneNumber,
       verificationCodeAttempt: verificationCode
-    }).then((response) => {
+    }).then(async (response) => {
+      await AsyncStorage.setItem("name", response.data.name)
       return response.data;
     }).catch((err) => {
       return {};
     })
-
+    
     if (data.verified) {
       try {
-        await AsyncStorage.multiSet([[ "loggedIn", "true" ], [ "phoneNumber", loginState.phoneNumber ], [ "name", loginState.name ]]);
+        await AsyncStorage.multiSet([[ "loggedIn", "true" ], [ "phoneNumber", loginState.phoneNumber ]]);
         setLoginState({
           ...loginState, loginView: 1
         });
