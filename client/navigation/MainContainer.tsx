@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Image, StyleSheet } from 'react-native'
 import {NavigationContainer} from '@react-navigation/native'
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -9,6 +9,8 @@ import HomeScreen from '../screens/Home'
 import FavoritesScreen from '../screens/Favorites'
 import ProfileScreen from '../screens/Profile'
 import LogoTitle from '../components/LogoTitle';
+import { Profile } from '../Types and Interfaces/types';
+import axios from 'axios';
 
 // Screen Names
 const homeName = 'Home';
@@ -16,8 +18,20 @@ const favoritesName = 'Favorites';
 const profileName = 'Profile';
 const Tab = createBottomTabNavigator();
 
-const MainContainer = () =>
+const MainContainer = ({ loginState, setLoginState }:any) =>
 {
+
+    const [ favorites, setFavorites ] = useState<Profile[]>([  ]);
+
+    useEffect(() => {
+        (async () => {
+
+            await axios.get("http://localhost:3000/api/user/getUser/3052837746").then((r) => {
+                setFavorites(r.data.results[0].favorites)
+            })
+        })();
+    }, [  ])
+
     return (
         <>
             <NavigationContainer >
@@ -57,9 +71,9 @@ const MainContainer = () =>
                             color: 'white'
                         },
                     })}>
-                    <Tab.Screen name={homeName} component={HomeScreen} options={{headerTitle: (props: any) => <LogoTitle {...props}/>, tabBarActiveTintColor: '#F8D49B', tabBarInactiveTintColor: 'white'}} />
-                    <Tab.Screen name={favoritesName} component={FavoritesScreen} options={{tabBarActiveTintColor: '#F8D49B', tabBarInactiveTintColor: 'white'}}/>
-                    <Tab.Screen name={profileName} component={ProfileScreen} options={{tabBarActiveTintColor: '#F8D49B', tabBarInactiveTintColor: 'white'}}/>
+                    <Tab.Screen name={homeName} component={() => <HomeScreen { ...{favorites, setFavorites} } />} options={{headerTitle: (props: any) => <LogoTitle {...props}/>, tabBarActiveTintColor: '#F8D49B', tabBarInactiveTintColor: 'white'}} />
+                    <Tab.Screen name={favoritesName} component={() => <FavoritesScreen { ...{favorites, setFavorites} } />} options={{tabBarActiveTintColor: '#F8D49B', tabBarInactiveTintColor: 'white'}}/>
+                    <Tab.Screen name={profileName} component={() => <ProfileScreen { ...{loginState, setLoginState} }  />} options={{tabBarActiveTintColor: '#F8D49B', tabBarInactiveTintColor: 'white'}}/>
                 </Tab.Navigator>
                 
             </NavigationContainer>
