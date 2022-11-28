@@ -100,7 +100,6 @@ router.post("/verify", async (req, res) => {
 
 // Append new favorites to user's favorites list
 router.post('/addFavorites', async (req, res) => {
-
    const { phoneNumber, favorites } = req.body;
 
 
@@ -114,8 +113,6 @@ router.post('/addFavorites', async (req, res) => {
             const foundUser = user[0];
 
             const uniqueFavorites = foundUser.favorites;
-            console.log(uniqueFavorites)
-            console.log(favorites)
 
             for (let x = 0; x < favorites.length; ++x) {
                 let foundFavorite = false;
@@ -136,7 +133,8 @@ router.post('/addFavorites', async (req, res) => {
                 $set: { favorites: uniqueFavorites }
             });
 
-            res.status(200).json(user);
+
+            res.status(200).json({ phoneNumber, name: foundUser.name, favorites: uniqueFavorites });
 
         }
 
