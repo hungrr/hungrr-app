@@ -12,10 +12,20 @@ import { LinearGradient } from "expo-linear-gradient";
 import { CardProps } from "../Types and Interfaces/types";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-
-
-
 export default function Card(props: CardProps) {
+
+  const prices = () => {
+    const $ = props.profile.price
+    let s = '';
+    let count = 1
+    while (count <= $)
+    {
+      s += '$'
+      count += 1
+    }
+    return s
+  }
+
   return (
     <ImageBackground
       resizeMode="cover"
@@ -39,25 +49,9 @@ export default function Card(props: CardProps) {
             <Text style={styles.name}>{props.profile.name}</Text>
             <Text style={styles.ratingValue}>{props.profile.rating}</Text>
             <Ionicons style={styles.ratingIcon} name={'star'} color={'gold'} size={15}/>
+            <Text style={styles.price}>{prices()}</Text>
           </View>
       </LinearGradient>
-      <Animated.View
-        style={{
-          ...styles.like,
-          opacity: props.likeOpacity ?? 0,
-        }}
-      >
-        <Text>Like</Text>
-      </Animated.View>
-      <Animated.View
-        style={{
-          ...styles.like,
-          ...styles.dislike,
-          opacity: props.dislikeOpacity ?? 0,
-        }}
-      >
-        <Text>Nope</Text>
-      </Animated.View>
     </ImageBackground>
   );
 }
@@ -101,6 +95,13 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 63, 
     right: 15
-    
+  },
+  price:{
+    color: 'white',
+    position: "absolute",
+    bottom: 30,
+    right: 15,
+    fontSize: 16,
+    fontWeight: 'bold'
   }
 });
