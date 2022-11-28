@@ -28,17 +28,6 @@ export default function Card(props:Profile) {
     return s
   }
 
-  const addToFavorites = async () => {
-    const phoneNumber = await AsyncStorage.getItem("phoneNumber");
-
-    await axios.post("http://localhost:3000/api/user/addFavorites", {
-      phoneNumber,
-      favorites: [ props ]
-    }).then((res) => {
-      console.log(`${res.status} - added...`);
-    })
-  };
-
   return (
     <ImageBackground
       resizeMode="cover"
