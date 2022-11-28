@@ -5,12 +5,14 @@ import mongoose from 'mongoose';
 //import loginRoutes from './login/login_routes';
 import userroutes from './user/user_routes';
 import googleMaps from './restaurant/googleMaps';
+import cors from "cors";
 
 dotenv.config();
 
 const app = express();
 
 // middleware
+app.use(cors());
 app.use(express.json());
 app.use(bodyparser.urlencoded({ extended : true }));
 
