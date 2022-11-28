@@ -7,7 +7,6 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 // import screens 
 import HomeScreen from '../screens/Home'
 import FavoritesScreen from '../screens/Favorites'
-import SettingsScreen from '../screens/Settings'
 import ProfileScreen from '../screens/Profile'
 import LogoTitle from '../components/LogoTitle';
 
