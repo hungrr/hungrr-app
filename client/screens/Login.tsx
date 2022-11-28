@@ -3,17 +3,19 @@ import { background, color } from 'native-base/lib/typescript/theme/styled-syste
 import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, Button, Image, StyleSheet, Pressable } from 'react-native';
 import MainContainer from '../navigation/MainContainer';
+import axios from "axios";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const LoginLanding = ({ setPhoneNumber, phoneNumber, requestCode }:{ setPhoneNumber:Function, phoneNumber:string, requestCode:Function }) => {
+const LoginLanding = ({ requestCode, setLoginState, loginState }:any) => {
   return (
     <>
       <View style={styles.login}>
         <Image style={styles.logo} source={require('../assets/images/logo.png')}/>
         <Text style={styles.message}>Enter Your Phone Number</Text>
-        <TextInput style={styles.input} onChangeText={(text:string) => setPhoneNumber(text)} value={phoneNumber} keyboardType={"numeric"} returnKeyType='done' />
+        <TextInput style={styles.input} onChangeText={(text:string) => setLoginState({ ...loginState, phoneNumber: text })} value={loginState.phoneNumber} keyboardType={"numeric"} returnKeyType='done' />
         <Pressable style={styles.submit}>
           <Button color={'black'} title="Submit" onPress={() => {
-              if (phoneNumber.length === 10) {
+              if (loginState.phoneNumber.length === 10) {
                 requestCode();
               }
             }}
@@ -25,7 +27,32 @@ const LoginLanding = ({ setPhoneNumber, phoneNumber, requestCode }:{ setPhoneNum
   );
 };
 
-const LoginVerifyLanding = ({ setVerificationCode, verificationCode, verifyCode  }:{  verifyCode:Function, setVerificationCode:Function, verificationCode:string }) => {
+const LoginVerifyLanding = ({ setVerificationCode, verificationCode, setLoginState, loginState  }:any) => {
+  const verifyCode = async () => {
+
+    const data = await axios.post("http://localhost:3000/api/user/verify", {
+      phoneNumber: loginState.phoneNumber,
+      verificationCodeAttempt: verificationCode
+    }).then((response) => {
+      return response.data;
+    }).catch((err) => {
+      return {};
+    })
+
+    if (data.verified) {
+      try {
+        await AsyncStorage.multiSet([[ "loggedIn", "true" ], [ "phoneNumber", loginState.phoneNumber ], [ "name", loginState.name ]]);
+        setLoginState({
+          ...loginState, loginView: 1
+        });
+      } catch (err) {
+        console.log("Error trying to login after verification");
+      }
+    }
+
+  };
+
+
   return (
     <View style={styles.verifyPage}>
       <View style={styles.back}>
@@ -33,6 +60,7 @@ const LoginVerifyLanding = ({ setVerificationCode, verificationCode, verifyCode 
           <Button color='black' title="Back"
             onPress={() => {
               setVerificationCode("");
+              setLoginState({ ...loginState, loginView: -1 });
             }}
           />
         </Pressable>
@@ -41,7 +69,8 @@ const LoginVerifyLanding = ({ setVerificationCode, verificationCode, verifyCode 
       <View style={{flex: 0.1, justifyContent: 'center', alignItems: 'center'}}>
         <Text style={styles.verificationMessage}> Please enter the verification code </Text>
         <TextInput style={styles.verifyTextBox}  onChangeText={(text:string) => setVerificationCode(text) } value={verificationCode} />
-        <Pressable style={styles.submitVerification}>
+        <Pressable style={styles.submitVerification} onPress={() => {
+          }}>
           <Button color='black' title="Submit" onPress={() => {
             verifyCode();
           }} />
@@ -52,7 +81,7 @@ const LoginVerifyLanding = ({ setVerificationCode, verificationCode, verifyCode 
   );
 };
 
-const Login = ({ loginState, setLoginState }: { loginState:any, setLoginState:Function }) => {
+const Login = ({ loginState, setLoginState }:any) => {
   // Declare the state functionality for the phone number text input
   const [ phoneNumber, setPhoneNumber ] = useState<string>("");
 
@@ -71,9 +100,7 @@ const Login = ({ loginState, setLoginState }: { loginState:any, setLoginState:Fu
     setLoginState({ ...loginState, loginView: 0 });
   };
 
-  const verifyCode = async () => {
-    setLoginState({ ...loginState, loginView: 1 });
-  };
+
 
   useEffect(() => {
     // for on component verification
@@ -85,9 +112,9 @@ const Login = ({ loginState, setLoginState }: { loginState:any, setLoginState:Fu
     <View style={{ ...styles.container  }}>
       {
         loginState.loginView === -1 ?
-          <LoginLanding { ...{setPhoneNumber, phoneNumber, requestCode} } />
+          <LoginLanding { ...{setPhoneNumber, phoneNumber, requestCode, setLoginState, loginState} } />
           :
-          <LoginVerifyLanding {...{setVerificationCode, verificationCode, verifyCode}}  />
+          <LoginVerifyLanding {...{setVerificationCode, verificationCode, setLoginState, loginState}}  />
       }
     </View>
   );
