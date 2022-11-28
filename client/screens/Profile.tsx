@@ -1,8 +1,9 @@
 import { View, Text, Button, Pressable, Alert, StyleSheet, Image, TextInput } from 'react-native';
-import React from 'react'
+import React from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-export default function Profile({ name, phoneNumber }:{ name:string, phoneNumber:string }) {
+export default function Profile({ loginState, setLoginState }:any) {
     
     const nameInitials = () => {
         let name:string = 'Khoi Vu'
@@ -11,7 +12,15 @@ export default function Profile({ name, phoneNumber }:{ name:string, phoneNumber
     }
 
     const logOut = async () => {
-
+        try {
+            await AsyncStorage.removeItem("loggedIn");
+            await AsyncStorage.removeItem("phoneNumber");
+            await AsyncStorage.removeItem("name");
+            setLoginState({ ...loginState, loginView: -1 });
+            window.location.replace(window.location.pathname);
+        } catch(err) {
+            console.log(`Error logging out: ${err}`);
+        }
     };
 
     const createPopupDeleteProfile = () => Alert.alert(
@@ -30,6 +39,7 @@ export default function Profile({ name, phoneNumber }:{ name:string, phoneNumber
                 onPress: () => {
                     logOut();
                     console.log("logging out...");
+                    location.reload();
                 }
             }
         ]
@@ -45,7 +55,9 @@ export default function Profile({ name, phoneNumber }:{ name:string, phoneNumber
                     }} />
                 </Pressable>
                 <Pressable style={styles.logout}>
-                    <Button color="black" title="Logout"/>
+                    <Button color="black" title="Logout" onPress={() => {
+                        logOut();
+                    }}/>
                 </Pressable>
             </View>
             <View style={styles.infoContainer}>
