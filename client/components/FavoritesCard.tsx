@@ -7,22 +7,22 @@ import {
   NativeBaseProvider,
   ScrollView,
 } from "native-base";
-import { FavoritesCardProp } from "../Types and Interfaces/types";
+import { Profile } from "../Types and Interfaces/types";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 
 
-export default function FavoritesCard(props:FavoritesCardProp){
+export default function FavoritesCard(props:Profile){
   return (
     <Box style={styles.container}>
       <Box style={styles.picture}>
-        <ImageBackground source={props.favorites.image} style={{ flex: 1 }}>
-          <Text style={styles.rating}>{props.favorites.rating}</Text>
+        <ImageBackground source={{uri: props.photoLink}} style={{ flex: 1 }}>
+          <Text style={styles.rating}>{props.rating}</Text>
           <Ionicons style={styles.star} name={'star'} color={'gold'} size={13}/>
         </ImageBackground>
       </Box>
       <Box style={styles.info}> 
-        <Text style={styles.Description}>{props.favorites.name}</Text>
+        <Text style={styles.Description}>{props.name}</Text>
       </Box>
     </Box>
   );

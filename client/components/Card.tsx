@@ -9,15 +9,15 @@ import {
   ImageBackground,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { CardProps } from "../Types and Interfaces/types";
+import { Profile } from "../Types and Interfaces/types";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import axios from "axios";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function Card(props:any) {
+export default function Card(props:Profile) {
 
   const prices = () => {
-    const $ = props.profile.price
+    const $ = props.price_level
     let s = '';
     let count = 1
     while (count <= $)
@@ -51,7 +51,7 @@ export default function Card(props:any) {
         overflow: "hidden",
       }}
       
-      source={props.profile.image}
+      source={{uri: props.photoLink}}
     >
       {/* Added a Linear Gradient*/}
       <LinearGradient
@@ -59,8 +59,8 @@ export default function Card(props:any) {
         style={{height : '100%', width : '100%'}}>
           {/* Moved text overlay inside gradient so you can see it */}
           <View style={styles.overlay}>
-            <Text style={styles.name}>{props.profile.name}</Text>
-            <Text style={styles.ratingValue}>{props.profile.rating}</Text>
+            <Text style={styles.name}>{props.name}</Text>
+            <Text style={styles.ratingValue}>{props.rating}</Text>
             <Ionicons style={styles.ratingIcon} name={'star'} color={'gold'} size={15}/>
             <Text style={styles.price}>{prices()}</Text>
           </View>

@@ -2,12 +2,11 @@ import Icon from "react-native-vector-icons/AntDesign";
 import { StyleSheet, View, Image, Text } from "react-native";
 import React, {useRef} from "react";
 import Card from "./Card";
-import sampleCards from "../sample data/sampleCards";
 import CardsSwipe, { SWIPE_DIRECTION } from "react-native-cards-swipe";
-import * as Location from "expo-location";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Profile } from "../Types and Interfaces/types";
 
 // contain logic of getting next card handle swipe etc...
 export default function CardContainer() {
@@ -20,22 +19,28 @@ export default function CardContainer() {
     const phoneNumber = await AsyncStorage.getItem("phoneNumber");
 
     const data = await axios.get("http://localhost:3000/api/places/getPlaces").then((res) => {
-      setPlaces(res.data);
+      setPlaces(res.data.results);
+      console.log(res.data)
     }).catch((err) => {
       console.log(err);
     });
-  }, [  ]);
+  }, [ ]);
 
   return ( 
     <View style={StyleSheet.absoluteFill}>
       {/* Testing out cardswipe it's working*/}
       <CardsSwipe
         ref={swiper}
-        cards={sampleCards}
+        cards={places}
         cardContainerStyle={styles.container}
-        renderCard={(card:any) => (
+        renderCard={(card:Profile) => (
           <View style={styles.card}>
-            <Card profile={card}/>
+            <Card {...card}/>
+          </View>
+        )}
+        renderNoMoreCard={() => (
+          <View style={styles.noMoreCard}>
+            <Text>{'No more Cards!'}</Text>
           </View>
         )}
         renderYep={() => (
@@ -129,5 +134,12 @@ const styles = StyleSheet.create({
     fontSize: 32,
     color: 'red',
     fontWeight: 'bold',
+  },
+  noMoreCard: {
+    width: '100%',
+    height: '100%',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

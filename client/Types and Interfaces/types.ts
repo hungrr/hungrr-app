@@ -14,24 +14,16 @@ import {
   } from "react-native";
 
 export type Profile = {
-    image: ImageSourcePropType;
+    photoLink: string;
+    vicinity: string;
+    business_status: string;
     name: string;
+    place_id: string;
+    price_level: number;
     rating: number;
-    price: number;
+    user_ratings_total: number;
 };
 
-export type CardProps = {
-    profile: Profile;
-    likeOpacity?: number;
-    dislikeOpacity?: number;
-};
 
-export type FavoriteRestaurant = {
-    image: ImageSourcePropType;
-    name: string;
-    rating: number;
-};
 
-export type FavoritesCardProp = {
-    favorites: FavoriteRestaurant;
-}
+
