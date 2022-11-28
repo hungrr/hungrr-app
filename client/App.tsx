@@ -20,15 +20,21 @@ export default function App() {
     try {
 
       const isLoggedIn = await AsyncStorage.getItem("loggedIn");
+
       if (isLoggedIn !== null) {
-        setLoginState({ ...loginState, loginView: 1 });
+
+        const phoneNumber = (await AsyncStorage.getItem("phoneNumber")) || "UNDEFINED";
+        const name = (await AsyncStorage.getItem("name")) || "UNDEFINED";
+
+        setLoginState({ ...loginState, loginView: 1, phoneNumber, name });
+
       } else {
         setLoginState({ ...loginState, loginView: -1 });
       }
     } catch(err) {
       console.log("There has been an error checking logged in status");
     }
-  }, [  ]);
+  }, [ loginState.loggedIn ]);
 
   return (
     <SafeAreaProvider>
