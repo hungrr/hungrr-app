@@ -23,6 +23,9 @@ export default function FavoritesCard(props:FavoritesCardProp){
       </Box>
       <Box style={styles.info}> 
         <Text style={styles.Description}>{props.favorites.name}</Text>
+        <Ionicons name={"close-outline"} color={"red"} size={40} onPress={() => {
+          // add logic to remove card
+        }}/>
       </Box>
     </Box>
   );
