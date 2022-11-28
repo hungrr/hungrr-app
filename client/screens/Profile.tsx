@@ -1,10 +1,15 @@
-import { View, Text, Button, Pressable, Alert, StyleSheet, Image } from 'react-native';
+import { View, Text, Button, Pressable, Alert, StyleSheet, Image, TextInput } from 'react-native';
 import React from 'react'
-import { Ionicons } from '@expo/vector-icons';
-import { Press } from 'hammerjs';
+
 
 export default function Profile({ name, phoneNumber }:{ name:string, phoneNumber:string }) {
     
+    const nameInitials = () => {
+        let name:string = 'Khoi Vu'
+        let initial:string = name[0]
+        return initial
+    }
+
     const logOut = async () => {
 
     };
@@ -44,9 +49,16 @@ export default function Profile({ name, phoneNumber }:{ name:string, phoneNumber
                 </Pressable>
             </View>
             <View style={styles.infoContainer}>
-                <Image style={styles.icon} source={require('../assets/images/profileIcon.png')}/>
+                {/* <Image style={styles.icon} source={require('../assets/images/profileIcon.png')}/> */}
+                <View style={styles.initials}>
+                    <Text style={styles.initialsText}>{nameInitials()}</Text>
+                </View>
                 <Text style={styles.name}>Khoi Vu</Text>
                 <Text style={styles.phone}>phone</Text>
+                <Pressable style={styles.editProfile}>
+                    <Button color="black" title="Edit Profile"/>
+                </Pressable>
+                <TextInput style={styles.textbox} value='  Edit Name' returnKeyType='done'/>
             </View>
 
 
@@ -63,11 +75,13 @@ const styles = StyleSheet.create({
     name: {
         fontWeight: 'bold',
         fontSize: 30,
-        bottom: 200
+        bottom: 150,
+
     },
     phone:{
         fontSize: 18,
-        bottom: 200
+        bottom: 150,
+
     },
     icon: {
         // transform: [{scale: 0.04}],
@@ -81,6 +95,8 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+        width: '100%',
+
     },
     delete:{
         width: '40%',
@@ -102,6 +118,32 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         width: '100%'
+    },
+    initials: {
+        backgroundColor: '#FFCDAA',
+        width: 110,
+        height: 110,
+        borderRadius: 110/2,
+        justifyContent: 'center',
+        alignItems: 'center',
+        bottom: 165,
+    },
+    initialsText: {
+        fontSize: 50,
+        fontWeight: 'bold'
+    },
+    editProfile: {
+        backgroundColor: '#FFCDAA',
+        borderRadius: 10,
+        bottom: 140
+    },
+    textbox: {
+        borderWidth: 1,
+        width: '50%',
+        height: 40,
+        borderRadius: 10,
+        bottom: 90
+
     }
     
 })
