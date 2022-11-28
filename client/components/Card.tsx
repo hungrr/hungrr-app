@@ -11,8 +11,10 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import { CardProps } from "../Types and Interfaces/types";
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import axios from "axios";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function Card(props: CardProps) {
+export default function Card(props:any) {
 
   const prices = () => {
     const $ = props.profile.price
@@ -25,6 +27,17 @@ export default function Card(props: CardProps) {
     }
     return s
   }
+
+  const addToFavorites = async () => {
+    const phoneNumber = await AsyncStorage.getItem("phoneNumber");
+
+    await axios.post("http://localhost:3000/api/user/addFavorites", {
+      phoneNumber,
+      favorites: [ props ]
+    }).then((res) => {
+      console.log(`${res.status} - added...`);
+    })
+  };
 
   return (
     <ImageBackground
