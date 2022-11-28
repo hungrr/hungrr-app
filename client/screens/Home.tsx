@@ -2,10 +2,10 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import CardContainer from "../components/CardContainer";
 
-export default function Home() {
+export default function Home({ favorites, setFavorites }:any) {
   return (
     <View style={StyleSheet.absoluteFill}>
-      <CardContainer />
+      <CardContainer { ...{ favorites, setFavorites } } />
     </View>
   );
 }
