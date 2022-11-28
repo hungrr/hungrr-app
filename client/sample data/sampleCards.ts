@@ -21,7 +21,7 @@ const sampleCards:Profile[] = [
       },
       name: "Chick-Fil-A",
       rating: 4.5,
-      price: 1,
+      price: 3,
     },
     {
       image: {
@@ -37,7 +37,7 @@ const sampleCards:Profile[] = [
       },
       name: "Starbucks",
       rating: 3.4,
-      price: 1
+      price: 4
     }
 ];
 
