@@ -9,21 +9,37 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Profile } from "../Types and Interfaces/types";
 
 // contain logic of getting next card handle swipe etc...
-export default function CardContainer() {
+export default function CardContainer({ setFavorites, favorites }:any) {
   const swiper = useRef<CardsSwipeRefObject>(null);
   const [ places, setPlaces ] = useState([  ]);
 
-  useEffect(async () => {
-
-    const location = await AsyncStorage.getItem("location") || "";
+  const addToFavorites = async (props?:Profile) => {
     const phoneNumber = await AsyncStorage.getItem("phoneNumber");
 
-    const data = await axios.get("http://localhost:3000/api/places/getPlaces").then((res) => {
-      setPlaces(res.data.results);
-      console.log(res.data)
-    }).catch((err) => {
-      console.log(err);
-    });
+    await axios.post("http://localhost:3000/api/user/addFavorites", {
+      phoneNumber,
+      favorites: props === undefined ? [  ] : [ props ]
+    }).then((res) => {
+      setFavorites(res.data.favorites);
+    })
+  };
+
+  useEffect(() => {
+
+    (async () => {
+
+      const location = await AsyncStorage.getItem("location") || "";
+      const phoneNumber = await AsyncStorage.getItem("phoneNumber");
+      
+      const data = await axios.get("http://localhost:3000/api/places/getPlaces").then((res) => {
+        setPlaces(res.data.results);
+        console.log(res.data)
+      }).catch((err) => {
+        console.log(err);
+      });
+    })();
+
+
   }, [ ]);
 
   return ( 
@@ -53,18 +69,27 @@ export default function CardContainer() {
             <Text style={styles.nopeLabel}>NOPE</Text>
           </View>
         )}
+        onSwipedRight={(index:number) => {
+          console.log(places[index]);
+          addToFavorites(places[index]);
+        }}
+
+        loop={false}
         
       />
       <View style={styles.bottom}>
         <Icon onPress={() => {
-          if (swiper.current) swiper.current.swipeLeft();
+          if (swiper.current)swiper.current.swipeLeft();
         }} 
         name="close" 
         size={30} 
         color="red" />
 
         <Icon onPress={() => {
-          if (swiper.current) swiper.current.swipeRight();
+          if (swiper.current) {
+            console.log(swiper.current)
+            swiper.current.swipeRight();
+          }
         }} 
         name="hearto" 
         size={30} 
