@@ -4,11 +4,27 @@ import React, {useRef} from "react";
 import Card from "./Card";
 import sampleCards from "../sample data/sampleCards";
 import CardsSwipe, { SWIPE_DIRECTION } from "react-native-cards-swipe";
-
+import * as Location from "expo-location";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // contain logic of getting next card handle swipe etc...
 export default function CardContainer() {
   const swiper = useRef<CardsSwipeRefObject>(null);
+  const [ places, setPlaces ] = useState([  ]);
+
+  useEffect(async () => {
+
+    const location = await AsyncStorage.getItem("location") || "";
+    const phoneNumber = await AsyncStorage.getItem("phoneNumber");
+
+    const data = await axios.get("http://localhost:3000/api/places/getPlaces").then((res) => {
+      setPlaces(res.data);
+    }).catch((err) => {
+      console.log(err);
+    });
+  }, [  ]);
 
   return ( 
     <View style={StyleSheet.absoluteFill}>
@@ -17,7 +33,7 @@ export default function CardContainer() {
         ref={swiper}
         cards={sampleCards}
         cardContainerStyle={styles.container}
-        renderCard={(card) => (
+        renderCard={(card:any) => (
           <View style={styles.card}>
             <Card profile={card}/>
           </View>
