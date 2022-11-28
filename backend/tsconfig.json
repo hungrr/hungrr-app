@@ -1,0 +1,7 @@
+{ "extends": "@tsconfig/node16/tsconfig.json",
+    "compilerOptions": {
+        "target": "es6",
+        "esModuleInterop": true,
+    }
+
+}
