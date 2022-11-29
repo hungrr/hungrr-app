@@ -9,14 +9,19 @@ import {
 } from "native-base";
 import { Profile } from "../Types and Interfaces/types";
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { LinearGradient } from "expo-linear-gradient";
 
 export default function FavoritesCard(props:Profile){
   return (
     <Box style={styles.container}>
       <Box style={styles.picture}>
-        <ImageBackground source={{uri: props.photoLink}} style={{ flex: 1 }}>
-          <Text style={styles.rating}>{props.rating}</Text>
-          <Ionicons style={styles.star} name={'star'} color={'gold'} size={13}/>
+        <ImageBackground source={{uri: props.photoLink}} style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'flex-end', flexDirection: 'row' }}>
+          <LinearGradient
+          colors={['#00000000', '#000000']} 
+          style={{height : '100%', width : '100%'}}>
+            <Text style={styles.rating}>{props.rating}</Text>
+            <Ionicons style={styles.star} name={'star'} color={'gold'} size={13}/>
+          </LinearGradient>
         </ImageBackground>
       </Box>
       <Box style={styles.info}> 
@@ -61,12 +66,15 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 15,
     fontWeight: "bold",
-    top: 90,
-    left: 300,
+    position: 'absolute',
+    bottom: 10,
+    right: 25
   },
   star: {
-    top: 73,
-    left: 330
+    position: 'absolute',
+    bottom: 13,
+    right: 10
+
   },
 });
 
