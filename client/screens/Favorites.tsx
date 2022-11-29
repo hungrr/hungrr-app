@@ -15,6 +15,17 @@ export default function Favorites({ setFavorites, favorites }:any) {
         return s;
     }
 
+    const deleteFavorite = async (card:Profile) => {
+        const phoneNumber = await AsyncStorage.getItem("phoneNumber");
+
+        const data = await axios.post("http://localhost:3000/api/user/removeFavorite", {
+            phoneNumber, deleteFavorite: card
+        }).then((r) => {
+            console.log(`Deleted card of restaurant ${card.name}`);
+            setFavorites(favorites.filter((r:Profile) => r.place_id === card.place_id));
+        })
+    }
+
     return (
         <NativeBaseProvider>
             <ScrollView contentContainerStyle={{ flexGrow: 1, alignItems: 'center', padding: 25 }}>
@@ -25,7 +36,7 @@ export default function Favorites({ setFavorites, favorites }:any) {
                                 No favorites... start swiping!
                             </Text>
                         :
-                        favorites.map((card:Profile) => <FavoritesCard key={hash()} {...card} />)
+                        favorites.map((card:Profile) => <FavoritesCard key={hash()} props={card} deleteFavorite={deleteFavorite} />)
                     )
                 }
             </ScrollView>

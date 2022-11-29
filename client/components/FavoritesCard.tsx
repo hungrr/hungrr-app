@@ -11,18 +11,18 @@ import { Profile } from "../Types and Interfaces/types";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { LinearGradient } from "expo-linear-gradient";
 
-export default function FavoritesCard(props:Profile){
+export default function FavoritesCard(properties: { props:Profile, deleteFavorite:Function }){
   return (
     <Box style={styles.container}>
       <Box style={styles.picture}>
-        <ImageBackground source={{uri: props.photoLink}} style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'flex-end', flexDirection: 'row' }}>
+        <ImageBackground source={{uri: properties.props.photoLink}} style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'flex-end', flexDirection: 'row' }}>
           <LinearGradient
           colors={['#00000000', '#000000']} 
           style={{height : '100%', width : '100%'}}>
-            <Text style={styles.rating}>{props.rating}</Text>
+            <Text style={styles.rating}>{properties.props.rating}</Text>
             <Ionicons style={styles.star} name={'star'} color={'gold'} size={13}/>
-            <Text style={styles.Description}>{props.name}</Text>
-            <Text style={styles.address}>{props.vicinity.slice(0, Math.min(50,props.vicinity.length)) }</Text>
+            <Text style={styles.Description}>{properties.props.name}</Text>
+            <Text style={styles.address}>{properties.props.vicinity.slice(0, Math.min(50,properties.props.vicinity.length)) }</Text>
           </LinearGradient>
         </ImageBackground>
       </Box>
@@ -31,6 +31,7 @@ export default function FavoritesCard(props:Profile){
 
         <Ionicons onPress={() => {
           // add remove logic here
+          properties.deleteFavorite(properties.props);
         }} 
         name="close-outline" color={"red"} size={30} />
       </Box>

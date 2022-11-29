@@ -1,10 +1,10 @@
 import { View, Text, Button, Pressable, Alert, StyleSheet, Image, TextInput } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import axios from "axios";
 
 export default function Profile({ loginState, setLoginState }:any) {
-    
+
     const [ n, setN ] = useState<string>("");
     const [ pn, setPN ] = useState<string>("");
 
@@ -16,7 +16,7 @@ export default function Profile({ loginState, setLoginState }:any) {
             setN(name);
             setPN(phoneNumber);
         })();
-    }, [])
+    }, []);
 
     const setInitial = () => n.length === 0 ? "" : n[0].toUpperCase(); 
     const formatPhoneNumber = () => `(${pn.slice(0,3)})-${pn.slice(3,6)}-${pn.slice(6,10)}`
@@ -27,7 +27,26 @@ export default function Profile({ loginState, setLoginState }:any) {
             await AsyncStorage.removeItem("phoneNumber");
             await AsyncStorage.removeItem("name");
             setLoginState({ ...loginState, loginView: -1 });
+        } catch(err) {
+            console.log(`Error logging out: ${err}`);
+        }
+    };
+
+    const deleteUser = async () => {
+        try {
+            const phoneNumber = await AsyncStorage.getItem("phoneNumber");
+            await AsyncStorage.removeItem("loggedIn");
+            await AsyncStorage.removeItem("phoneNumber");
+            await AsyncStorage.removeItem("name");
+            setLoginState({ ...loginState, loginView: -1 });
             window.location.replace(window.location.pathname);
+
+            await axios.post("http://localhost:3000/api/user/deleteUser", {
+                phoneNumber: phoneNumber || ""
+            }).then((response:any) => {
+                console.log(`Deleted user ${phoneNumber}`);
+                console.log(response);
+            });
         } catch(err) {
             console.log(`Error logging out: ${err}`);
         }
@@ -48,8 +67,6 @@ export default function Profile({ loginState, setLoginState }:any) {
                 style: "cancel",
                 onPress: () => {
                     logOut();
-                    console.log("logging out...");
-                    location.reload();
                 }
             }
         ]
@@ -61,7 +78,7 @@ export default function Profile({ loginState, setLoginState }:any) {
             <View style={styles.topButtons}>
                 <Pressable style={styles.delete}>
                     <Button color='black' title="Delete profile" onPress={() => {
-                        createPopupDeleteProfile();
+                        deleteUser();
                     }} />
                 </Pressable>
                 <Pressable style={styles.logout}>

@@ -7,16 +7,38 @@ import axios from "axios";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LoginLanding = ({ requestCode, setLoginState, loginState }:any) => {
+
+  const [ showNotExists, setShowNotExists ] = useState<boolean>(false);
+
   return (
     <>
       <View style={styles.login}>
+        <Pressable>
+          <Button title="Register" onPress={() => {
+            setLoginState({ ...loginState, loginView: -2 });
+          }} />
+        </Pressable>
         <Image style={styles.logo} source={require('../assets/images/logo.png')}/>
         <Text style={styles.message}>Enter Your Phone Number</Text>
         <TextInput style={styles.input} onChangeText={(text:string) => setLoginState({ ...loginState, phoneNumber: text })} value={loginState.phoneNumber} keyboardType={"numeric"} returnKeyType='done' />
+        <Text>{
+            showNotExists ? "This account does not exist." : ""
+          }</Text>
         <Pressable style={styles.submit}>
           <Button color={'black'} title="Submit" onPress={() => {
               if (loginState.phoneNumber.length === 10) {
-                requestCode();
+                (async () => {
+                  await axios.post("http://localhost:3000/api/user/verify", {
+                    phoneNumber: loginState.phoneNumber,
+                    verificationCodeAttempt: ""
+                  }).then((r) => {
+                    if (!r.data.userExists) {
+                      setShowNotExists(true);
+                    } else {
+                      requestCode();
+                    }
+                  })
+                })();
               }
             }}
           />
@@ -33,10 +55,10 @@ const LoginVerifyLanding = ({ setVerificationCode, verificationCode, setLoginSta
     const data = await axios.post("http://localhost:3000/api/user/verify", {
       phoneNumber: loginState.phoneNumber,
       verificationCodeAttempt: verificationCode
-    }).then(async (response) => {
+    }).then(async (response:any) => {
       await AsyncStorage.setItem("name", response.data.name)
       return response.data;
-    }).catch((err) => {
+    }).catch((err:any) => {
       return {};
     })
     
@@ -98,6 +120,13 @@ const Login = ({ loginState, setLoginState }:any) => {
   // Makes API request to the backend
   const requestCode = async () => {
     // const data = await axios.post();
+
+    const data = await axios.post("http://localhost:3000/api/user/newUser", {
+      phoneNumber: loginState.phoneNumber,
+      name: loginState.name
+    }).then((res:any) => {
+      console.log("sent the code...")
+    })
     setLoginState({ ...loginState, loginView: 0 });
   };
 
