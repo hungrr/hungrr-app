@@ -21,15 +21,18 @@ export default function FavoritesCard(props:Profile){
           style={{height : '100%', width : '100%'}}>
             <Text style={styles.rating}>{props.rating}</Text>
             <Ionicons style={styles.star} name={'star'} color={'gold'} size={13}/>
+            <Text style={styles.Description}>{props.name}</Text>
+            <Text style={styles.address}>{props.vicinity.slice(0, Math.min(50,props.vicinity.length)) }</Text>
           </LinearGradient>
         </ImageBackground>
       </Box>
       <Box style={styles.info}> 
-        <Text style={styles.Description}>{props.name}</Text>
+        
+
         <Ionicons onPress={() => {
           // add remove logic here
         }} 
-        name="close-outline" color={"red"} size={40}/>
+        name="close-outline" color={"red"} size={30} />
       </Box>
     </Box>
   );
@@ -43,7 +46,7 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   picture: {
-    flex: 1.5,
+    flex: 3.5,
     backgroundColor: "transparent",
     overflow: 'hidden',
     borderRadius: 10,
@@ -52,15 +55,17 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     backgroundColor: "transparent",
-    justifyContent: "center",
+    justifyContent: "flex-end",
   },
   Description: {
     flex: 1,
-    fontSize: 30,
+    fontSize: 20,
     fontWeight: "bold",
     alignItems: "center",
-    top: 5,
+    bottom: 30,
     left: 6,
+    color: 'white',
+    position: 'absolute'
   },
   rating: {
     color: "white",
@@ -76,6 +81,13 @@ const styles = StyleSheet.create({
     right: 10
 
   },
+  address: {
+    color: 'white',
+    position: 'absolute',
+    bottom: 10,
+    left: 6,
+    fontSize: 11
+  }
 });
 
 

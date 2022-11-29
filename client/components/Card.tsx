@@ -48,7 +48,9 @@ export default function Card(props:Profile) {
         style={{height : '100%', width : '100%'}}>
           {/* Moved text overlay inside gradient so you can see it */}
           <View style={styles.overlay}>
-            <Text style={styles.name}>{props.name}</Text>
+            <View style={{flex: 0.8, justifyContent: 'center', height: '25%'}}>
+              <Text style={styles.name}>{props.name}</Text>
+            </View>
             <Text style={styles.ratingValue}>{props.rating}</Text>
             <Ionicons style={styles.ratingIcon} name={'star'} color={'gold'} size={15}/>
             <Text style={styles.price}>{prices()}</Text>
@@ -75,15 +77,16 @@ const styles = StyleSheet.create({
   },
   overlay: {
     flex: 1,
-    flexDirection: 'row'
+    flexDirection: 'row',
+    alignItems: 'flex-end'
   },
   name: {
     color: "white",
     fontWeight: "bold",
     fontSize: 24,
-    position: "absolute",
-    bottom: 60,
-    left: 18,
+    position: 'absolute',
+    bottom: 40,
+    marginLeft: 10
   },
   ratingValue: {
     color: "white",

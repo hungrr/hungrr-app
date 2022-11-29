@@ -91,13 +91,15 @@ const styles = StyleSheet.create({
     name: {
         fontWeight: 'bold',
         fontSize: 30,
-        bottom: 150,
-
+        bottom: 250,
+        margin: 5,
+        position: 'absolute'
     },
     phone:{
-        fontSize: 18,
-        bottom: 150,
-
+        fontSize: 20,
+        bottom: 220,
+        margin: 5,
+        position: 'absolute'
     },
     icon: {
         // transform: [{scale: 0.04}],
@@ -118,31 +120,32 @@ const styles = StyleSheet.create({
         width: '40%',
         height: 'auto',
         backgroundColor: '#FFCDAA',
-        margin: 10,
         borderRadius: 10,
         transform: [{scale: 0.7}],
-        right: 99,
     },
     logout:{
         backgroundColor: '#FFCDAA',
         borderRadius: 10,
         transform: [{scale: 0.7}],
-        left: 65
+        width: '40%'
+
     },
     topButtons: {
         flexDirection: 'row-reverse',
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: '100%'
+        justifyContent: 'space-between',
+        alignItems: 'flex-start',
+        width: '100%',
+        flex: 1
     },
     initials: {
         backgroundColor: '#FFCDAA',
-        width: 110,
-        height: 110,
-        borderRadius: 110/2,
+        width: 150,
+        height: 150,
+        borderRadius: 150/2,
         justifyContent: 'center',
         alignItems: 'center',
-        bottom: 165,
+        position: 'absolute',
+        bottom: 300
     },
     initialsText: {
         fontSize: 50,
